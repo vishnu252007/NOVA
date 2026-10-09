@@ -3,62 +3,1882 @@
   "id": "programming-basics",
   "title": "Programming Basics: Loops and Lists",
   "subject": "Programming",
-  "version": "0.1.0",
-  "description": "SAMPLE pack for the foundation. Replace and extend with the team's reviewed content.",
+  "version": "0.2.0",
+  "description": "Six concepts from variables to recursion, with misconception-tagged questions. Written with AI help; every question must be reviewed by a person (see docs/CONTENT_REVIEW.md).",
   "concepts": [
-    { "id": "variables", "title": "Variables", "summary": "A variable is a name that holds a value.", "prerequisites": [], "keywords": ["variable", "variables", "assign", "store", "name", "value"],
-      "explanations": { "plain": "A variable is a name that points to a value. x = 5 stores 5 under the name x." },
-      "teachBack": [ { "id": "name-value", "label": "a variable is a name for a stored value", "keywords": ["name", "store", "holds", "value"] } ] },
-    { "id": "lists", "title": "Lists", "summary": "A list holds many values in order. Positions start at 0.", "prerequisites": ["variables"], "keywords": ["list", "lists", "array", "index", "item", "items", "element"],
-      "explanations": { "plain": "A list keeps several values in order. The first item is at index 0, the second at index 1, and so on." },
-      "teachBack": [ { "id": "index-zero", "label": "the first item is at index 0", "keywords": ["0", "zero", "first"] }, { "id": "order", "label": "items keep their order", "keywords": ["order", "sequence", "position"] } ] },
-    { "id": "loops", "title": "Loops", "summary": "A loop repeats a block of code.", "prerequisites": ["variables"], "keywords": ["loop", "loops", "for", "while", "repeat", "iterate", "range"],
-      "explanations": { "plain": "A for loop repeats its body once for each value it is given, for example each value from range()." },
-      "teachBack": [ { "id": "repeat", "label": "a loop repeats code", "keywords": ["repeat", "again", "each", "many times"] } ] },
-    { "id": "loop-bounds", "title": "Loop bounds", "summary": "range(a, b) starts at a and stops before b.", "prerequisites": ["loops", "lists"], "keywords": ["bound", "bounds", "start", "stop", "skip", "skips", "first", "last", "range", "off", "index"],
+    {
+      "id": "variables",
+      "title": "Variables",
+      "summary": "A variable is a name that holds a value. Assigning with = puts a value under that name.",
+      "prerequisites": [],
+      "keywords": [
+        "variable",
+        "variables",
+        "assign",
+        "assignment",
+        "store",
+        "name",
+        "value",
+        "equals",
+        "reassign",
+        "copy",
+        "text",
+        "string",
+        "number"
+      ],
       "explanations": {
-        "plain": "range(a, b) gives the numbers from a up to, but not including, b. A list starts at index 0, so a loop over every item usually starts at 0.",
-        "counterexample": "Try range(1, 3) on [4, 7, 2]. i is 1, then 2. The 4 at index 0 is never visited."
+        "plain": "A variable is a name that points to a value. x = 5 stores 5 under the name x. The right side is worked out first, then stored under the name on the left. A new value replaces the old one, and b = a copies a's value at that moment.",
+        "analogy": "Think of a variable as a labelled box. The label is the name and the value is what is inside. x = 5 puts 5 in the box labelled x. Writing x = 8 later takes the 5 out and puts 8 in. It does not add them.",
+        "worked-example": "Step by step: a = 5 puts 5 in a. b = a copies the value 5 into b. a = 10 changes only a. Now a is 10 and b is still 5."
       },
       "teachBack": [
-        { "id": "start", "label": "where the loop starts (the first value of i)", "keywords": ["start", "begin", "first value"] },
-        { "id": "stop-excluded", "label": "the stop value is not included", "keywords": ["not included", "exclusive", "before", "stops before", "doesn't include", "does not include"] },
-        { "id": "zero-index", "label": "list positions start at 0", "keywords": ["0", "zero"] }
-      ] },
-    { "id": "functions", "title": "Functions", "summary": "A function is a reusable block of code with a name.", "prerequisites": ["loops"], "keywords": ["function", "functions", "def", "return", "call", "parameter"],
-      "explanations": { "plain": "A function packages code under a name so you can run it again by calling it." }, "teachBack": [] },
-    { "id": "recursion", "title": "Recursion", "summary": "A function that calls itself, with a base case to stop.", "prerequisites": ["functions"], "keywords": ["recursion", "recursive", "base case", "itself"],
-      "explanations": { "plain": "A recursive function calls itself on a smaller problem and stops at a base case." }, "teachBack": [] }
+        {
+          "id": "name-value",
+          "label": "a variable is a name for a stored value",
+          "keywords": [
+            "name",
+            "label",
+            "store",
+            "holds",
+            "box",
+            "points to"
+          ]
+        },
+        {
+          "id": "reassign",
+          "label": "a new value replaces the old value",
+          "keywords": [
+            "replace",
+            "replaces",
+            "overwrite",
+            "new value",
+            "instead"
+          ]
+        },
+        {
+          "id": "copy",
+          "label": "b = a makes a separate copy that does not follow later changes",
+          "keywords": [
+            "copy",
+            "separate",
+            "independent",
+            "not linked",
+            "doesn't change",
+            "does not change"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lists",
+      "title": "Lists",
+      "summary": "A list keeps many values in order. Positions (indexes) start at 0.",
+      "prerequisites": [
+        "variables"
+      ],
+      "keywords": [
+        "list",
+        "lists",
+        "array",
+        "index",
+        "indexes",
+        "item",
+        "items",
+        "element",
+        "append",
+        "slice",
+        "negative",
+        "len",
+        "length"
+      ],
+      "explanations": {
+        "plain": "A list keeps several values in order, like [10, 20, 30]. The first item is at index 0, the second at index 1, and so on. len(nums) is how many items there are, so the last index is len(nums) - 1. Negative indexes count from the end: nums[-1] is the last item. nums.append(x) adds x at the end and changes the list itself.",
+        "worked-example": "nums = [10, 20, 30, 40]. nums[0] is 10. nums[3] is 40. nums[-1] is also 40. nums[1:3] takes the items at index 1 and 2, which is [20, 30]: the stop index 3 is not included. nums.append(50) adds 50 at the end.",
+        "analogy": "A list is like a row of numbered lockers that starts at locker 0. The number on the locker is its index. The thing inside is the value."
+      },
+      "teachBack": [
+        {
+          "id": "index-zero",
+          "label": "the first item is at index 0",
+          "keywords": [
+            "0",
+            "zero",
+            "first"
+          ]
+        },
+        {
+          "id": "last-index",
+          "label": "the last index is one less than the length",
+          "keywords": [
+            "last",
+            "len",
+            "length",
+            "minus 1",
+            "- 1",
+            "one less"
+          ]
+        },
+        {
+          "id": "order",
+          "label": "items keep their order",
+          "keywords": [
+            "order",
+            "sequence",
+            "position"
+          ]
+        },
+        {
+          "id": "changes",
+          "label": "append changes the list itself",
+          "keywords": [
+            "append",
+            "adds",
+            "end",
+            "changes"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "loops",
+      "title": "Loops",
+      "summary": "A loop repeats a block of code. A for loop runs once for each value it is given.",
+      "prerequisites": [
+        "variables"
+      ],
+      "keywords": [
+        "loop",
+        "loops",
+        "for",
+        "while",
+        "repeat",
+        "iterate",
+        "range",
+        "total",
+        "sum",
+        "accumulate",
+        "nested",
+        "condition"
+      ],
+      "explanations": {
+        "plain": "A for loop repeats its body once for each value it is given, for example each value from range(). A while loop repeats as long as its condition is true. To add things up, start a total before the loop (total = 0) and add to it inside the loop.",
+        "worked-example": "total = 0, then for x in [3, 5]: total += x. The first time x is 3 and total becomes 3. The second time x is 5 and total becomes 8. A loop inside a loop runs its inner body (outer times inner) times: range(2) outside and range(3) inside gives 6 runs.",
+        "analogy": "A loop is like running laps on a track. range(3) means three laps. A nested loop is laps inside laps: for every outer lap you do all the inner laps again."
+      },
+      "teachBack": [
+        {
+          "id": "repeat",
+          "label": "a loop repeats code",
+          "keywords": [
+            "repeat",
+            "again",
+            "each",
+            "many times"
+          ]
+        },
+        {
+          "id": "total-start",
+          "label": "a total is set before the loop and added to inside it",
+          "keywords": [
+            "start",
+            "before",
+            "total",
+            "accumulate",
+            "add"
+          ]
+        },
+        {
+          "id": "while-condition",
+          "label": "a while loop repeats while its condition is true",
+          "keywords": [
+            "while",
+            "condition",
+            "true",
+            "until"
+          ]
+        },
+        {
+          "id": "nested",
+          "label": "the inner loop runs fully for every round of the outer loop",
+          "keywords": [
+            "inner",
+            "outer",
+            "nested",
+            "multiply",
+            "times"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "loop-bounds",
+      "title": "Loop bounds",
+      "summary": "range(a, b) starts at a and stops before b.",
+      "prerequisites": [
+        "loops",
+        "lists"
+      ],
+      "keywords": [
+        "bound",
+        "bounds",
+        "start",
+        "stop",
+        "skip",
+        "skips",
+        "first",
+        "last",
+        "range",
+        "off",
+        "index",
+        "len",
+        "reverse",
+        "step",
+        "countdown"
+      ],
+      "explanations": {
+        "plain": "range(a, b) gives the numbers from a up to, but not including, b. A list starts at index 0, so a loop over every item usually starts at 0 and stops at len(nums).",
+        "counterexample": "Try range(1, 3) on [4, 7, 2]. i is 1, then 2. The 4 at index 0 is never visited.",
+        "worked-example": "nums = [4, 7, 2] has 3 items, so its indexes are 0, 1, 2. range(len(nums)) gives 0, 1, 2 and visits every item. range(1, len(nums)) gives 1, 2 and skips the 4. range(0, len(nums) - 1) gives 0, 1 and skips the last item."
+      },
+      "teachBack": [
+        {
+          "id": "start",
+          "label": "where the loop starts (the first value of i)",
+          "keywords": [
+            "start",
+            "begin",
+            "first value"
+          ]
+        },
+        {
+          "id": "stop-excluded",
+          "label": "the stop value is not included",
+          "keywords": [
+            "not included",
+            "exclusive",
+            "before",
+            "stops before",
+            "doesn't include",
+            "does not include"
+          ]
+        },
+        {
+          "id": "zero-index",
+          "label": "list positions start at 0",
+          "keywords": [
+            "0",
+            "zero"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "functions",
+      "title": "Functions",
+      "summary": "A function is a reusable block of code with a name. return gives a value back; print only shows it.",
+      "prerequisites": [
+        "loops"
+      ],
+      "keywords": [
+        "function",
+        "functions",
+        "def",
+        "return",
+        "returns",
+        "call",
+        "parameter",
+        "parameters",
+        "argument",
+        "arguments",
+        "print"
+      ],
+      "explanations": {
+        "plain": "A function packages code under a name. def makes it, but nothing runs until you call it with parentheses, like greet(). Parameters are names for the values you pass in. return sends a value back to the caller and ends the function at once. print only shows something on the screen.",
+        "worked-example": "def add(a, b): return a + b. The call add(2, 3) gives a the value 2 and b the value 3, and returns 5. x = add(2, 3) stores 5 in x. If the function used print(a + b) instead of return, it would show 5 but x would be None.",
+        "analogy": "A function is like a recipe card. Writing the card cooks nothing. Calling it is cooking. The ingredients you hand over are the arguments, and return is the finished dish you carry back."
+      },
+      "teachBack": [
+        {
+          "id": "def-not-run",
+          "label": "defining a function does not run it; calling it does",
+          "keywords": [
+            "call",
+            "calling",
+            "def",
+            "define",
+            "run"
+          ]
+        },
+        {
+          "id": "return-vs-print",
+          "label": "return gives a value back, print only shows it",
+          "keywords": [
+            "return",
+            "print",
+            "gives back",
+            "shows"
+          ]
+        },
+        {
+          "id": "parameters",
+          "label": "parameters receive the values you pass in",
+          "keywords": [
+            "parameter",
+            "argument",
+            "pass",
+            "input"
+          ]
+        },
+        {
+          "id": "return-stops",
+          "label": "return ends the function, so lines after it do not run",
+          "keywords": [
+            "ends",
+            "stops",
+            "after return",
+            "exit"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "recursion",
+      "title": "Recursion",
+      "summary": "A function that calls itself on a smaller problem, with a base case that stops it.",
+      "prerequisites": [
+        "functions"
+      ],
+      "keywords": [
+        "recursion",
+        "recursive",
+        "base case",
+        "itself",
+        "calls itself",
+        "factorial",
+        "stack"
+      ],
+      "explanations": {
+        "plain": "A recursive function calls itself on a smaller version of the problem. It needs a base case, an answer it can give without calling itself, otherwise it never stops. Each call waits for the call below it to finish before it can finish its own work.",
+        "worked-example": "def total(n): if n == 0: return 0, otherwise return n + total(n - 1). total(3) waits for total(2), which waits for total(1), which waits for total(0). total(0) returns 0. Then total(1) returns 1 + 0, total(2) returns 2 + 1, and total(3) returns 3 + 3 = 6.",
+        "analogy": "Nesting dolls: to reach the smallest doll you open one doll after another until the last doll that has nothing inside (the base case). Then you close them back up one by one."
+      },
+      "teachBack": [
+        {
+          "id": "base-case",
+          "label": "a base case stops the recursion",
+          "keywords": [
+            "base case",
+            "stop",
+            "stops",
+            "end",
+            "terminate"
+          ]
+        },
+        {
+          "id": "smaller",
+          "label": "each call works on a smaller problem",
+          "keywords": [
+            "smaller",
+            "n - 1",
+            "n-1",
+            "closer",
+            "simpler"
+          ]
+        },
+        {
+          "id": "pending-work",
+          "label": "each call waits and finishes its work after the call below it returns",
+          "keywords": [
+            "wait",
+            "waits",
+            "pending",
+            "return",
+            "back up",
+            "unwind"
+          ]
+        }
+      ]
+    }
   ],
   "misconceptions": [
-    { "id": "off-by-one-start", "concept": "loop-bounds", "title": "Off-by-one (loop start)", "description": "thinks a loop starting at 1 still visits the item at index 0", "explanations": { "plain": "Index 0 is the first item. A loop that starts at 1 skips it." } },
-    { "id": "off-by-one-end", "concept": "loop-bounds", "title": "Off-by-one (loop end)", "description": "thinks the stop value of range() is included", "explanations": { "plain": "The stop value of range() is never included." } },
-    { "id": "index-vs-value", "concept": "loop-bounds", "title": "Index and value confused", "description": "mixes up the position i with the value nums[i]", "explanations": { "plain": "i is the position. nums[i] is the value stored there." } },
-    { "id": "counts-from-zero", "concept": "loop-bounds", "title": "Range read as 'first n items'", "description": "thinks range(a, b) means the first b-a items from the start", "explanations": { "plain": "range(a, b) starts at a, not at the beginning of the list." } },
-    { "id": "shifted-range", "concept": "loop-bounds", "title": "Shifted range", "description": "shifts both ends of range() by one", "explanations": { "plain": "Shifting both ends reaches an index that does not exist and still skips index 0." } },
-    { "id": "index-starts-at-one", "concept": "lists", "title": "Index starts at 1", "description": "thinks the first list item is at index 1", "explanations": { "plain": "In Python the first item is at index 0." } },
-    { "id": "len-is-last-index", "concept": "lists", "title": "Length equals last index", "description": "thinks len(list) is the index of the last item", "explanations": { "plain": "A list of 3 items has indexes 0, 1, 2. The last index is len - 1." } },
-    { "id": "range-counts-from-one", "concept": "loops", "title": "range starts at 1", "description": "thinks range(n) produces 1 to n", "explanations": { "plain": "range(n) produces 0 up to n - 1." } },
-    { "id": "count-equals-stop", "concept": "loops", "title": "Runs = stop value", "description": "thinks the body runs as many times as the stop value", "explanations": { "plain": "range(a, b) runs b - a times." } }
+    {
+      "id": "off-by-one-start",
+      "concept": "loop-bounds",
+      "title": "Off-by-one (loop start)",
+      "description": "thinks a loop starting at 1 still visits the item at index 0",
+      "explanations": {
+        "plain": "Index 0 is the first item. A loop that starts at 1 skips it."
+      }
+    },
+    {
+      "id": "off-by-one-end",
+      "concept": "loop-bounds",
+      "title": "Off-by-one (loop end)",
+      "description": "thinks the stop value of range() is included",
+      "explanations": {
+        "plain": "The stop value of range() is never included."
+      }
+    },
+    {
+      "id": "index-vs-value",
+      "concept": "loop-bounds",
+      "title": "Index and value confused",
+      "description": "mixes up the position i with the value nums[i]",
+      "explanations": {
+        "plain": "i is the position. nums[i] is the value stored there."
+      }
+    },
+    {
+      "id": "counts-from-zero",
+      "concept": "loop-bounds",
+      "title": "Range read as 'first n items'",
+      "description": "thinks range(a, b) means the first b-a items from the start",
+      "explanations": {
+        "plain": "range(a, b) starts at a, not at the beginning of the list."
+      }
+    },
+    {
+      "id": "shifted-range",
+      "concept": "loop-bounds",
+      "title": "Shifted range",
+      "description": "shifts both ends of range() by one",
+      "explanations": {
+        "plain": "Shifting both ends reaches an index that does not exist and still skips index 0."
+      }
+    },
+    {
+      "id": "index-starts-at-one",
+      "concept": "lists",
+      "title": "Index starts at 1",
+      "description": "thinks the first list item is at index 1",
+      "explanations": {
+        "plain": "In Python the first item is at index 0."
+      }
+    },
+    {
+      "id": "len-is-last-index",
+      "concept": "lists",
+      "title": "Length equals last index",
+      "description": "thinks len(list) is the index of the last item",
+      "explanations": {
+        "plain": "A list of 3 items has indexes 0, 1, 2. The last index is len - 1."
+      }
+    },
+    {
+      "id": "range-counts-from-one",
+      "concept": "loops",
+      "title": "range starts at 1",
+      "description": "thinks range(n) produces 1 to n",
+      "explanations": {
+        "plain": "range(n) produces 0 up to n - 1."
+      }
+    },
+    {
+      "id": "count-equals-stop",
+      "concept": "loops",
+      "title": "Runs = stop value",
+      "description": "thinks the body runs as many times as the stop value",
+      "explanations": {
+        "plain": "range(a, b) runs b - a times."
+      }
+    },
+    {
+      "id": "copy-stays-linked",
+      "concept": "variables",
+      "title": "Copy stays linked",
+      "description": "thinks b = a keeps b linked to a, so b changes when a changes",
+      "explanations": {
+        "plain": "b = a copies the value at that moment. Changing a later does not change b."
+      }
+    },
+    {
+      "id": "reassign-adds-values",
+      "concept": "variables",
+      "title": "New value is added to the old one",
+      "description": "thinks giving a variable a new value adds it to the old one",
+      "explanations": {
+        "plain": "A new value replaces the old one. To add, write x = x + 8."
+      }
+    },
+    {
+      "id": "variable-keeps-first-value",
+      "concept": "variables",
+      "title": "Variable keeps its first value",
+      "description": "thinks a variable keeps the first value it got",
+      "explanations": {
+        "plain": "Each assignment replaces the value. The last assignment wins."
+      }
+    },
+    {
+      "id": "print-shows-names-only",
+      "concept": "variables",
+      "title": "Print shows the name",
+      "description": "thinks print shows a variable's name or the expression instead of its value",
+      "explanations": {
+        "plain": "print(x) shows the value stored in x. Only text in quotes is shown as written."
+      }
+    },
+    {
+      "id": "plus-always-adds-numbers",
+      "concept": "variables",
+      "title": "Plus always adds",
+      "description": "thinks + adds numbers even when the values are text",
+      "explanations": {
+        "plain": "With text, + joins the pieces: \"5\" + \"3\" is \"53\". Only numbers are added."
+      }
+    },
+    {
+      "id": "assignment-direction-reversed",
+      "concept": "variables",
+      "title": "Assignment runs the wrong way",
+      "description": "thinks a = b changes b instead of a",
+      "explanations": {
+        "plain": "The name on the left receives the value from the right. a = b changes a."
+      }
+    },
+    {
+      "id": "assignment-swaps-values",
+      "concept": "variables",
+      "title": "Assignment swaps values",
+      "description": "thinks a = b swaps the two values",
+      "explanations": {
+        "plain": "a = b only changes a. b stays as it was, so both end up with the same value."
+      }
+    },
+    {
+      "id": "index-skips-ahead",
+      "concept": "lists",
+      "title": "Index reads the next item",
+      "description": "thinks nums[i] gives the item after position i",
+      "explanations": {
+        "plain": "nums[i] is exactly the item at position i."
+      }
+    },
+    {
+      "id": "append-does-not-change-list",
+      "concept": "lists",
+      "title": "append changes nothing",
+      "description": "thinks nums.append(3) leaves nums unchanged",
+      "explanations": {
+        "plain": "append changes the list itself. After nums.append(3), nums has one more item."
+      }
+    },
+    {
+      "id": "append-adds-at-start",
+      "concept": "lists",
+      "title": "append adds at the start",
+      "description": "thinks append puts the new item at the front",
+      "explanations": {
+        "plain": "append adds the new item at the end."
+      }
+    },
+    {
+      "id": "negative-index-counts-from-start",
+      "concept": "lists",
+      "title": "Negative index reads from the start",
+      "description": "thinks nums[-1] is the first item",
+      "explanations": {
+        "plain": "Negative indexes count from the end. nums[-1] is the last item."
+      }
+    },
+    {
+      "id": "negative-index-off-by-one",
+      "concept": "lists",
+      "title": "-1 is the item before the last",
+      "description": "thinks nums[-1] is the second to last item",
+      "explanations": {
+        "plain": "nums[-1] is the last item, nums[-2] the one before it."
+      }
+    },
+    {
+      "id": "slice-end-included",
+      "concept": "lists",
+      "title": "Slice end is included",
+      "description": "thinks nums[a:b] includes the item at index b",
+      "explanations": {
+        "plain": "In nums[a:b] the item at index b is not included."
+      }
+    },
+    {
+      "id": "slice-counts-from-start",
+      "concept": "lists",
+      "title": "Slice counts from the start",
+      "description": "thinks nums[a:b] takes the first b - a items from the beginning",
+      "explanations": {
+        "plain": "nums[a:b] starts at index a, not at the beginning of the list."
+      }
+    },
+    {
+      "id": "slice-ignores-start",
+      "concept": "lists",
+      "title": "Slice ignores the start",
+      "description": "thinks nums[a:b] always begins at index 0",
+      "explanations": {
+        "plain": "The first number in a slice is where it starts."
+      }
+    },
+    {
+      "id": "nested-loops-add-counts",
+      "concept": "loops",
+      "title": "Nested loops add up",
+      "description": "thinks a loop inside a loop runs outer + inner times",
+      "explanations": {
+        "plain": "The inner loop runs fully for every round of the outer loop, so the counts multiply."
+      }
+    },
+    {
+      "id": "nested-only-one-loop-counted",
+      "concept": "loops",
+      "title": "Only one loop counted",
+      "description": "thinks only one of the two nested loops decides how often the body runs",
+      "explanations": {
+        "plain": "Both loops matter: the body runs outer times inner times."
+      }
+    },
+    {
+      "id": "loop-variable-stuck",
+      "concept": "loops",
+      "title": "Loop variable never changes",
+      "description": "thinks the loop variable keeps its first value",
+      "explanations": {
+        "plain": "The loop variable takes the next value in every round."
+      }
+    },
+    {
+      "id": "loop-body-ignored",
+      "concept": "loops",
+      "title": "Calculation in the body ignored",
+      "description": "thinks the loop shows the items and skips the calculation in the body",
+      "explanations": {
+        "plain": "The body runs in every round, including the calculation."
+      }
+    },
+    {
+      "id": "loop-prints-total-only",
+      "concept": "loops",
+      "title": "Loop shows only the total",
+      "description": "thinks a loop that prints inside it shows one total at the end",
+      "explanations": {
+        "plain": "print inside the loop runs once per round, so it shows one line per round."
+      }
+    },
+    {
+      "id": "accumulator-ignores-start",
+      "concept": "loops",
+      "title": "Total ignores its start value",
+      "description": "thinks the starting value of total does not count",
+      "explanations": {
+        "plain": "total starts at the number you give it. Everything added later comes on top of that start."
+      }
+    },
+    {
+      "id": "update-replaces-instead-of-adds",
+      "concept": "loops",
+      "title": "+= read as =",
+      "description": "thinks total += x replaces total with x",
+      "explanations": {
+        "plain": "total += x means total = total + x. It adds to what is already there."
+      }
+    },
+    {
+      "id": "accumulator-multiplies",
+      "concept": "loops",
+      "title": "Total is multiplied",
+      "description": "thinks += multiplies",
+      "explanations": {
+        "plain": "+= adds. It does not multiply."
+      }
+    },
+    {
+      "id": "start-added-every-round",
+      "concept": "loops",
+      "title": "Start added every round",
+      "description": "thinks the starting value is added again in each round",
+      "explanations": {
+        "plain": "The starting value is set once, before the loop."
+      }
+    },
+    {
+      "id": "while-includes-stop-value",
+      "concept": "loops",
+      "title": "while < includes the stop",
+      "description": "thinks while i < stop also runs for i equal to stop",
+      "explanations": {
+        "plain": "while i < stop stops as soon as i reaches stop, so the stop value itself is not run."
+      }
+    },
+    {
+      "id": "while-stops-too-early",
+      "concept": "loops",
+      "title": "Loop stops one round early",
+      "description": "thinks the loop stops before the condition becomes false",
+      "explanations": {
+        "plain": "The loop keeps going until the condition becomes false, not before."
+      }
+    },
+    {
+      "id": "while-skips-initial-value",
+      "concept": "loops",
+      "title": "Loop skips the first value",
+      "description": "thinks the body does not run for the starting value",
+      "explanations": {
+        "plain": "i starts at its starting value and the body runs for that value first."
+      }
+    },
+    {
+      "id": "less-equal-excludes-stop",
+      "concept": "loops",
+      "title": "<= excludes the stop",
+      "description": "thinks while i <= stop leaves out the stop value",
+      "explanations": {
+        "plain": "With <=, the stop value itself is still included."
+      }
+    },
+    {
+      "id": "while-runs-past-stop",
+      "concept": "loops",
+      "title": "Loop runs past the stop",
+      "description": "thinks the loop goes on after the condition is false",
+      "explanations": {
+        "plain": "The loop ends the first time the condition is false, so it cannot go past the stop."
+      }
+    },
+    {
+      "id": "negative-step-ignored",
+      "concept": "loop-bounds",
+      "title": "Negative step ignored",
+      "description": "thinks a step of -1 does nothing, so range(3, 0, -1) is empty",
+      "explanations": {
+        "plain": "A step of -1 counts down. range(3, 0, -1) gives 3, 2, 1."
+      }
+    },
+    {
+      "id": "reverse-range-starts-below",
+      "concept": "loop-bounds",
+      "title": "Countdown starts one too low",
+      "description": "thinks a countdown starts below its first number",
+      "explanations": {
+        "plain": "A countdown starts at the first number. range(3, 0, -1) starts at 3."
+      }
+    },
+    {
+      "id": "definition-runs-function",
+      "concept": "functions",
+      "title": "Defining runs the function",
+      "description": "thinks def runs the function body",
+      "explanations": {
+        "plain": "def only creates the function. The body runs when you call it with parentheses."
+      }
+    },
+    {
+      "id": "print-is-return",
+      "concept": "functions",
+      "title": "print is the same as return",
+      "description": "mixes up showing a value (print) with giving it back (return)",
+      "explanations": {
+        "plain": "print shows a value on the screen. return hands a value back. A function with no return gives back None."
+      }
+    },
+    {
+      "id": "function-print-not-shown",
+      "concept": "functions",
+      "title": "print inside a function is hidden",
+      "description": "thinks print inside a function shows nothing",
+      "explanations": {
+        "plain": "print shows its value whenever the line runs, even inside a function."
+      }
+    },
+    {
+      "id": "parameter-changes-caller",
+      "concept": "functions",
+      "title": "Parameter changes the caller's variable",
+      "description": "thinks changing a parameter inside a function changes the variable outside",
+      "explanations": {
+        "plain": "A parameter is a copy of the value. Changing it inside the function does not change the variable outside."
+      }
+    },
+    {
+      "id": "code-after-return-runs",
+      "concept": "functions",
+      "title": "Code after return still runs",
+      "description": "thinks lines after return still run",
+      "explanations": {
+        "plain": "return ends the function immediately. Lines after it never run."
+      }
+    },
+    {
+      "id": "arguments-order-reversed",
+      "concept": "functions",
+      "title": "Argument order reversed",
+      "description": "thinks the arguments go to the parameters in reverse order",
+      "explanations": {
+        "plain": "Arguments go to the parameters in order: the first argument goes to the first parameter."
+      }
+    },
+    {
+      "id": "returns-first-argument",
+      "concept": "functions",
+      "title": "Function returns its first input",
+      "description": "thinks a function gives back its first argument",
+      "explanations": {
+        "plain": "A function returns what its return line works out, here a - b."
+      }
+    },
+    {
+      "id": "recursion-ends-by-itself",
+      "concept": "recursion",
+      "title": "Recursion stops by itself",
+      "description": "thinks a recursive function without a base case ends on its own",
+      "explanations": {
+        "plain": "Without a base case the function calls itself again and again until Python stops it with an error."
+      }
+    },
+    {
+      "id": "recursion-runs-once",
+      "concept": "recursion",
+      "title": "Only one call happens",
+      "description": "thinks the function calls itself only once",
+      "explanations": {
+        "plain": "Each call makes another call, so there are many calls in a chain."
+      }
+    },
+    {
+      "id": "recursion-order-reversed",
+      "concept": "recursion",
+      "title": "Prints in the order of the calls",
+      "description": "thinks a print after the recursive call runs before the deeper calls",
+      "explanations": {
+        "plain": "The print waits until the recursive call below it has finished, so the deepest call prints first."
+      }
+    },
+    {
+      "id": "recursion-forgets-pending-work",
+      "concept": "recursion",
+      "title": "Forgets the waiting work",
+      "description": "thinks each call returns only its own n",
+      "explanations": {
+        "plain": "Each call still has to add or multiply its own n onto the result it gets back."
+      }
+    },
+    {
+      "id": "recursion-returns-base-value",
+      "concept": "recursion",
+      "title": "Result is the base value",
+      "description": "thinks the answer is the base case value",
+      "explanations": {
+        "plain": "The base value is only where the chain ends. The calls above it add or multiply onto it."
+      }
+    },
+    {
+      "id": "recursion-skips-first-value",
+      "concept": "recursion",
+      "title": "Top call left out",
+      "description": "thinks total(4) only adds the numbers below 4",
+      "explanations": {
+        "plain": "total(4) is 4 + total(3), so 4 is included."
+      }
+    },
+    {
+      "id": "recursion-adds-instead",
+      "concept": "recursion",
+      "title": "Adds instead of multiplies",
+      "description": "thinks the calls add up when the code multiplies",
+      "explanations": {
+        "plain": "Follow the operator in the code: fact multiplies n by fact(n - 1)."
+      }
+    },
+    {
+      "id": "recursion-skips-base-call",
+      "concept": "recursion",
+      "title": "Base call not counted",
+      "description": "thinks the call with n == 0 is not a call",
+      "explanations": {
+        "plain": "The call with n == 0 is also a call, so count it."
+      }
+    },
+    {
+      "id": "recursion-counts-top-call-only",
+      "concept": "recursion",
+      "title": "Only the first call counted",
+      "description": "thinks only the first call counts",
+      "explanations": {
+        "plain": "Every call in the chain counts: f(3), f(2), f(1) and f(0)."
+      }
+    },
+    {
+      "id": "base-case-condition-reversed",
+      "concept": "recursion",
+      "title": "Base case condition is reversed",
+      "description": "thinks the base case can be true for large inputs",
+      "explanations": {
+        "plain": "The base case must be true only at the smallest input, here n == 0."
+      }
+    },
+    {
+      "id": "base-case-one-step-too-far",
+      "concept": "recursion",
+      "title": "Base case reached too late",
+      "description": "thinks n < 0 is a good stopping point",
+      "explanations": {
+        "plain": "n < 0 is only reached after n == 0, so the n == 0 case is worked out wrongly."
+      }
+    },
+    {
+      "id": "base-case-misses-zero",
+      "concept": "recursion",
+      "title": "Base case skips zero",
+      "description": "thinks stopping at n == 1 is enough for every start",
+      "explanations": {
+        "plain": "Starting from 0 the call never reaches n == 1, so it keeps going down forever."
+      }
+    }
   ],
   "questions": [
-    { "kind": "static", "id": "lists-index-1", "concept": "lists", "difficulty": 1, "prompt": "What is nums[1]?", "code": "nums = [5, 6, 7]",
-      "options": [ { "text": "6", "correct": true }, { "text": "5", "misconception": "index-starts-at-one" }, { "text": "7", "misconception": "len-is-last-index" } ],
-      "hints": ["Which index is the first item?"],
-      "feedback": { "index-starts-at-one": { "plain": "nums[1] is the SECOND item, because the first item is nums[0]." }, "len-is-last-index": { "plain": "nums[2] is the last item. nums[1] is the middle one, which is 6." } } },
-    { "kind": "static", "id": "lists-len-1", "concept": "lists", "difficulty": 2, "prompt": "Which index is the last item?", "code": "nums = [4, 8, 15]",
-      "options": [ { "text": "2", "correct": true }, { "text": "3", "misconception": "len-is-last-index" }, { "text": "1", "misconception": "index-starts-at-one" } ],
-      "hints": ["Count the indexes starting from 0."],
-      "feedback": { "len-is-last-index": { "plain": "len(nums) is 3, but indexes run 0, 1, 2. The last index is len(nums) - 1." }, "index-starts-at-one": { "plain": "Index 1 is the middle item. Indexes run 0, 1, 2." } } },
-    { "kind": "static", "id": "loops-range-1", "concept": "loops", "difficulty": 1, "prompt": "What does this print?", "code": "for i in range(3):\n    print(i)",
-      "options": [ { "text": "0  1  2", "correct": true }, { "text": "1  2  3", "misconception": "range-counts-from-one" }, { "text": "0  1  2  3", "misconception": "off-by-one-end" } ],
-      "hints": ["What is the first value of i?"],
-      "feedback": { "range-counts-from-one": { "plain": "range(3) starts at 0 and gives 0, 1, 2." }, "off-by-one-end": { "plain": "The stop value 3 is not included, so the last value is 2." } } },
-    { "kind": "static", "id": "loops-count-1", "concept": "loops", "difficulty": 2, "prompt": "How many times does the loop body run?", "code": "for i in range(2, 6):\n    print('hi')",
-      "options": [ { "text": "4", "correct": true }, { "text": "5", "misconception": "off-by-one-end" }, { "text": "6", "misconception": "count-equals-stop" } ],
-      "hints": ["List every value of i."],
-      "feedback": { "off-by-one-end": { "plain": "i takes 2, 3, 4, 5. The stop value 6 is not included, so 4 runs." }, "count-equals-stop": { "plain": "The count is stop minus start: 6 - 2 = 4, not 6." } } },
-    { "kind": "generated", "id": "loop-bounds-print", "concept": "loop-bounds", "difficulty": 1, "generator": "loop-bounds.print-loop" },
-    { "kind": "generated", "id": "loop-bounds-which", "concept": "loop-bounds", "difficulty": 2, "generator": "loop-bounds.which-range" }
+    {
+      "kind": "static",
+      "id": "variables-copy",
+      "concept": "variables",
+      "difficulty": 2,
+      "prompt": "What does this print?",
+      "code": "a = 5\nb = a\na = 10\nprint(b)",
+      "options": [
+        {
+          "text": "5",
+          "correct": true
+        },
+        {
+          "text": "10",
+          "misconception": "copy-stays-linked"
+        },
+        {
+          "text": "15",
+          "misconception": "reassign-adds-values"
+        }
+      ],
+      "hints": [
+        "When does b get its value?",
+        "b = a copies the value that a has at that moment."
+      ],
+      "feedback": {
+        "copy-stays-linked": {
+          "plain": "b = a copied the value 5 when that line ran. Changing a to 10 later does not change b, so b is still 5."
+        },
+        "reassign-adds-values": {
+          "plain": "Nothing is added. b = a copied 5, and a = 10 replaced a's value. b stays 5."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "variables-reassign",
+      "concept": "variables",
+      "difficulty": 1,
+      "prompt": "What does this print?",
+      "code": "x = 5\nx = 8\nprint(x)",
+      "options": [
+        {
+          "text": "8",
+          "correct": true
+        },
+        {
+          "text": "13",
+          "misconception": "reassign-adds-values"
+        },
+        {
+          "text": "5",
+          "misconception": "variable-keeps-first-value"
+        }
+      ],
+      "hints": [
+        "What happens to the old value when x gets a new one?"
+      ],
+      "feedback": {
+        "reassign-adds-values": {
+          "plain": "The new value replaces the old one. It is not added, so x is 8, not 13."
+        },
+        "variable-keeps-first-value": {
+          "plain": "The second line gave x a new value. The last assignment wins, so x is 8."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "variables-quotes",
+      "concept": "variables",
+      "difficulty": 1,
+      "prompt": "What does this print?",
+      "code": "name = \"Asha\"\nprint(\"name\")\nprint(name)",
+      "options": [
+        {
+          "text": "name  Asha",
+          "correct": true
+        },
+        {
+          "text": "Asha  Asha",
+          "misconception": "print-shows-names-only"
+        },
+        {
+          "text": "name  name",
+          "misconception": "print-shows-names-only"
+        }
+      ],
+      "hints": [
+        "Quotes make plain text. What does print(name) use?"
+      ],
+      "feedback": {
+        "print-shows-names-only": {
+          "plain": "print(\"name\") shows the word name because it is in quotes. print(name) without quotes shows the value stored in name, which is Asha."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "variables-plus-text",
+      "concept": "variables",
+      "difficulty": 2,
+      "prompt": "What does this print?",
+      "code": "x = \"5\"\ny = \"3\"\nprint(x + y)",
+      "options": [
+        {
+          "text": "53",
+          "correct": true
+        },
+        {
+          "text": "8",
+          "misconception": "plus-always-adds-numbers"
+        },
+        {
+          "text": "x + y",
+          "misconception": "print-shows-names-only"
+        }
+      ],
+      "hints": [
+        "Look at the quotes around 5 and 3. Are they numbers or text?"
+      ],
+      "feedback": {
+        "plus-always-adds-numbers": {
+          "plain": "\"5\" and \"3\" are text because of the quotes. + joins text, so the result is \"53\", not 8."
+        },
+        "print-shows-names-only": {
+          "plain": "print(x + y) works out x + y and shows the result. It does not show the letters x + y."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "variables-assign-direction",
+      "concept": "variables",
+      "difficulty": 2,
+      "prompt": "What does this print?",
+      "code": "a = 3\nb = 7\na = b\nprint(a, b)",
+      "options": [
+        {
+          "text": "7  7",
+          "correct": true
+        },
+        {
+          "text": "3  3",
+          "misconception": "assignment-direction-reversed"
+        },
+        {
+          "text": "7  3",
+          "misconception": "assignment-swaps-values"
+        }
+      ],
+      "hints": [
+        "Which name is on the left of a = b?",
+        "Only the name on the left changes."
+      ],
+      "feedback": {
+        "assignment-direction-reversed": {
+          "plain": "a = b gives a the value of b. The name on the left changes, so a becomes 7 and b stays 7."
+        },
+        "assignment-swaps-values": {
+          "plain": "a = b does not swap. Only a changes, so both a and b are 7."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "lists-index-1",
+      "concept": "lists",
+      "difficulty": 1,
+      "prompt": "What is nums[1]?",
+      "code": "nums = [5, 6, 7]",
+      "options": [
+        {
+          "text": "6",
+          "correct": true
+        },
+        {
+          "text": "5",
+          "misconception": "index-starts-at-one"
+        },
+        {
+          "text": "7",
+          "misconception": "len-is-last-index"
+        }
+      ],
+      "hints": [
+        "Which index is the first item?"
+      ],
+      "feedback": {
+        "index-starts-at-one": {
+          "plain": "nums[1] is the SECOND item, because the first item is nums[0]."
+        },
+        "len-is-last-index": {
+          "plain": "nums[2] is the last item. nums[1] is the middle one, which is 6."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "lists-len-1",
+      "concept": "lists",
+      "difficulty": 2,
+      "prompt": "Which index is the last item?",
+      "code": "nums = [4, 8, 15]",
+      "options": [
+        {
+          "text": "2",
+          "correct": true
+        },
+        {
+          "text": "3",
+          "misconception": "len-is-last-index"
+        },
+        {
+          "text": "1",
+          "misconception": "index-starts-at-one"
+        }
+      ],
+      "hints": [
+        "Count the indexes starting from 0."
+      ],
+      "feedback": {
+        "len-is-last-index": {
+          "plain": "len(nums) is 3, but indexes run 0, 1, 2. The last index is len(nums) - 1."
+        },
+        "index-starts-at-one": {
+          "plain": "Index 1 is the middle item. Indexes run 0, 1, 2."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "lists-append",
+      "concept": "lists",
+      "difficulty": 2,
+      "prompt": "What does this print?",
+      "code": "nums = [1, 2]\nnums.append(3)\nprint(nums)",
+      "options": [
+        {
+          "text": "[1, 2, 3]",
+          "correct": true
+        },
+        {
+          "text": "[1, 2]",
+          "misconception": "append-does-not-change-list"
+        },
+        {
+          "text": "[3, 1, 2]",
+          "misconception": "append-adds-at-start"
+        }
+      ],
+      "hints": [
+        "Does append change the list or make a new one?",
+        "Where does append put the new item?"
+      ],
+      "feedback": {
+        "append-does-not-change-list": {
+          "plain": "append changes the list itself. After nums.append(3) the list has three items."
+        },
+        "append-adds-at-start": {
+          "plain": "append adds the new item at the end of the list, not at the start."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "lists-negative",
+      "concept": "lists",
+      "difficulty": 2,
+      "prompt": "What does this print?",
+      "code": "nums = [10, 20, 30]\nprint(nums[-1])",
+      "options": [
+        {
+          "text": "30",
+          "correct": true
+        },
+        {
+          "text": "10",
+          "misconception": "negative-index-counts-from-start"
+        },
+        {
+          "text": "20",
+          "misconception": "negative-index-off-by-one"
+        }
+      ],
+      "hints": [
+        "Negative indexes count from the end."
+      ],
+      "feedback": {
+        "negative-index-counts-from-start": {
+          "plain": "A negative index counts from the end, so nums[-1] is the last item, 30."
+        },
+        "negative-index-off-by-one": {
+          "plain": "nums[-1] is the last item. nums[-2] would be the one before it (20)."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "lists-slice",
+      "concept": "lists",
+      "difficulty": 3,
+      "prompt": "What does this print?",
+      "code": "nums = [10, 20, 30, 40]\nprint(nums[1:3])",
+      "options": [
+        {
+          "text": "[20, 30]",
+          "correct": true
+        },
+        {
+          "text": "[20, 30, 40]",
+          "misconception": "slice-end-included"
+        },
+        {
+          "text": "[10, 20]",
+          "misconception": "slice-counts-from-start"
+        },
+        {
+          "text": "[10, 20, 30]",
+          "misconception": "slice-ignores-start"
+        }
+      ],
+      "hints": [
+        "The first number is where the slice starts.",
+        "The second number is where it stops, and that item is not included."
+      ],
+      "feedback": {
+        "slice-end-included": {
+          "plain": "In nums[1:3] the item at index 3 is not included. The slice has the items at index 1 and 2."
+        },
+        "slice-counts-from-start": {
+          "plain": "The slice starts at index 1, not at the beginning. It takes the items at index 1 and 2."
+        },
+        "slice-ignores-start": {
+          "plain": "The first number matters: the slice starts at index 1 (20), not at 0."
+        }
+      }
+    },
+    {
+      "kind": "generated",
+      "id": "lists-index-value",
+      "concept": "lists",
+      "difficulty": 1,
+      "generator": "lists.index-vs-value"
+    },
+    {
+      "kind": "static",
+      "id": "loops-range-1",
+      "concept": "loops",
+      "difficulty": 1,
+      "prompt": "What does this print?",
+      "code": "for i in range(3):\n    print(i)",
+      "options": [
+        {
+          "text": "0  1  2",
+          "correct": true
+        },
+        {
+          "text": "1  2  3",
+          "misconception": "range-counts-from-one"
+        },
+        {
+          "text": "0  1  2  3",
+          "misconception": "off-by-one-end"
+        }
+      ],
+      "hints": [
+        "What is the first value of i?"
+      ],
+      "feedback": {
+        "range-counts-from-one": {
+          "plain": "range(3) starts at 0 and gives 0, 1, 2."
+        },
+        "off-by-one-end": {
+          "plain": "The stop value 3 is not included, so the last value is 2."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "loops-count-1",
+      "concept": "loops",
+      "difficulty": 2,
+      "prompt": "How many times does the loop body run?",
+      "code": "for i in range(2, 6):\n    print('hi')",
+      "options": [
+        {
+          "text": "4",
+          "correct": true
+        },
+        {
+          "text": "5",
+          "misconception": "off-by-one-end"
+        },
+        {
+          "text": "6",
+          "misconception": "count-equals-stop"
+        }
+      ],
+      "hints": [
+        "List every value of i."
+      ],
+      "feedback": {
+        "off-by-one-end": {
+          "plain": "i takes 2, 3, 4, 5. The stop value 6 is not included, so 4 runs."
+        },
+        "count-equals-stop": {
+          "plain": "The count is stop minus start: 6 - 2 = 4, not 6."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "loops-nested",
+      "concept": "loops",
+      "difficulty": 3,
+      "prompt": "How many times does print run?",
+      "code": "for i in range(2):\n    for j in range(3):\n        print(\"*\")",
+      "options": [
+        {
+          "text": "6",
+          "correct": true
+        },
+        {
+          "text": "5",
+          "misconception": "nested-loops-add-counts"
+        },
+        {
+          "text": "3",
+          "misconception": "nested-only-one-loop-counted"
+        },
+        {
+          "text": "2",
+          "misconception": "nested-only-one-loop-counted"
+        }
+      ],
+      "hints": [
+        "The inner loop runs completely for every round of the outer loop."
+      ],
+      "feedback": {
+        "nested-loops-add-counts": {
+          "plain": "The counts multiply, they do not add: 2 rounds of the outer loop times 3 rounds of the inner loop is 6."
+        },
+        "nested-only-one-loop-counted": {
+          "plain": "Both loops count. The outer loop runs 2 times and each time the inner loop runs 3 times, so print runs 2 x 3 = 6 times."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "loops-body",
+      "concept": "loops",
+      "difficulty": 2,
+      "prompt": "What does this print?",
+      "code": "for x in [3, 5]:\n    print(x * 2)",
+      "options": [
+        {
+          "text": "6  10",
+          "correct": true
+        },
+        {
+          "text": "3  5",
+          "misconception": "loop-body-ignored"
+        },
+        {
+          "text": "6  6",
+          "misconception": "loop-variable-stuck"
+        },
+        {
+          "text": "16",
+          "misconception": "loop-prints-total-only"
+        }
+      ],
+      "hints": [
+        "What is x in the first round? And in the second?"
+      ],
+      "feedback": {
+        "loop-body-ignored": {
+          "plain": "The body is print(x * 2), so every item is doubled: 3 becomes 6 and 5 becomes 10."
+        },
+        "loop-variable-stuck": {
+          "plain": "x takes the next value in every round. In the second round x is 5, so 5 * 2 is 10."
+        },
+        "loop-prints-total-only": {
+          "plain": "print is inside the loop, so it runs once per round and shows one value each time, not one total."
+        }
+      }
+    },
+    {
+      "kind": "generated",
+      "id": "accumulator-init",
+      "concept": "loops",
+      "difficulty": 2,
+      "generator": "accumulator.init"
+    },
+    {
+      "kind": "generated",
+      "id": "loops-while",
+      "concept": "loops",
+      "difficulty": 3,
+      "generator": "loops.while-condition"
+    },
+    {
+      "kind": "generated",
+      "id": "loop-bounds-print",
+      "concept": "loop-bounds",
+      "difficulty": 1,
+      "generator": "loop-bounds.print-loop"
+    },
+    {
+      "kind": "generated",
+      "id": "loop-bounds-which",
+      "concept": "loop-bounds",
+      "difficulty": 2,
+      "generator": "loop-bounds.which-range"
+    },
+    {
+      "kind": "static",
+      "id": "loop-bounds-last",
+      "concept": "loop-bounds",
+      "difficulty": 2,
+      "prompt": "What does this print?",
+      "code": "nums = [5, 6, 7, 8]\nfor i in range(len(nums) - 1):\n    print(nums[i])",
+      "options": [
+        {
+          "text": "5  6  7",
+          "correct": true
+        },
+        {
+          "text": "6  7  8",
+          "misconception": "off-by-one-start"
+        },
+        {
+          "text": "5  6  7  8",
+          "misconception": "off-by-one-end"
+        }
+      ],
+      "hints": [
+        "How many numbers does range(len(nums) - 1) give?"
+      ],
+      "feedback": {
+        "off-by-one-start": {
+          "plain": "The loop starts at 0, so the first item (5) is visited. It is the last item (8) that is left out."
+        },
+        "off-by-one-end": {
+          "plain": "len(nums) - 1 is 3, and the stop value is not included, so i is 0, 1, 2. The last item (8) is left out."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "loop-bounds-countdown",
+      "concept": "loop-bounds",
+      "difficulty": 3,
+      "prompt": "What does this print?",
+      "code": "for i in range(3, 0, -1):\n    print(i)",
+      "options": [
+        {
+          "text": "3  2  1",
+          "correct": true
+        },
+        {
+          "text": "3  2  1  0",
+          "misconception": "off-by-one-end"
+        },
+        {
+          "text": "2  1  0",
+          "misconception": "reverse-range-starts-below"
+        },
+        {
+          "text": "Nothing is printed",
+          "misconception": "negative-step-ignored"
+        }
+      ],
+      "hints": [
+        "The third number in range is the step. What does -1 do?",
+        "The stop value is still not included."
+      ],
+      "feedback": {
+        "off-by-one-end": {
+          "plain": "The stop value 0 is not included, even when counting down. The last value is 1."
+        },
+        "reverse-range-starts-below": {
+          "plain": "A countdown starts at the first number, 3. It stops before 0."
+        },
+        "negative-step-ignored": {
+          "plain": "The step -1 makes range count down, so range(3, 0, -1) is not empty. It gives 3, 2, 1."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "functions-define-call",
+      "concept": "functions",
+      "difficulty": 1,
+      "prompt": "What does this print?",
+      "code": "def greet():\n    print(\"hi\")\nprint(\"start\")",
+      "options": [
+        {
+          "text": "start",
+          "correct": true
+        },
+        {
+          "text": "hi  start",
+          "misconception": "definition-runs-function"
+        },
+        {
+          "text": "hi",
+          "misconception": "definition-runs-function"
+        }
+      ],
+      "hints": [
+        "Is greet ever called with parentheses?"
+      ],
+      "feedback": {
+        "definition-runs-function": {
+          "plain": "def only creates the function. greet() is never called, so \"hi\" is never printed. Only print(\"start\") runs."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "functions-return-print",
+      "concept": "functions",
+      "difficulty": 2,
+      "prompt": "What does this print?",
+      "code": "def add(a, b):\n    print(a + b)\nx = add(2, 3)\nprint(x)",
+      "options": [
+        {
+          "text": "5  None",
+          "correct": true
+        },
+        {
+          "text": "5  5",
+          "misconception": "print-is-return"
+        },
+        {
+          "text": "None",
+          "misconception": "function-print-not-shown"
+        }
+      ],
+      "hints": [
+        "What does add give back? It has no return line."
+      ],
+      "feedback": {
+        "print-is-return": {
+          "plain": "The function prints 5 but gives back nothing (None). x holds None, so the second print shows None."
+        },
+        "function-print-not-shown": {
+          "plain": "print inside the function does show 5 when add(2, 3) runs. Then print(x) shows None, because add has no return."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "functions-parameter",
+      "concept": "functions",
+      "difficulty": 3,
+      "prompt": "What does this print?",
+      "code": "def add_one(x):\n    x = x + 1\na = 5\nadd_one(a)\nprint(a)",
+      "options": [
+        {
+          "text": "5",
+          "correct": true
+        },
+        {
+          "text": "6",
+          "misconception": "parameter-changes-caller"
+        },
+        {
+          "text": "None",
+          "misconception": "print-is-return"
+        }
+      ],
+      "hints": [
+        "x inside the function is a copy of the value of a."
+      ],
+      "feedback": {
+        "parameter-changes-caller": {
+          "plain": "x is a copy of 5. Changing x inside the function does not change a, so a is still 5."
+        },
+        "print-is-return": {
+          "plain": "print(a) shows the value of a, which is 5. The function's result is not printed anywhere."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "functions-after-return",
+      "concept": "functions",
+      "difficulty": 2,
+      "prompt": "What does this print?",
+      "code": "def f():\n    return 1\n    print(\"after\")\nprint(f())",
+      "options": [
+        {
+          "text": "1",
+          "correct": true
+        },
+        {
+          "text": "1  after",
+          "misconception": "code-after-return-runs"
+        },
+        {
+          "text": "after  1",
+          "misconception": "code-after-return-runs"
+        },
+        {
+          "text": "None",
+          "misconception": "print-is-return"
+        }
+      ],
+      "hints": [
+        "What does return do to the lines below it?"
+      ],
+      "feedback": {
+        "code-after-return-runs": {
+          "plain": "return ends the function at once. print(\"after\") never runs, so only the returned 1 is printed."
+        },
+        "print-is-return": {
+          "plain": "f() returns 1, and print shows that value, so 1 is printed, not None."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "functions-arguments",
+      "concept": "functions",
+      "difficulty": 2,
+      "prompt": "What does this print?",
+      "code": "def subtract(a, b):\n    return a - b\nprint(subtract(10, 3))",
+      "options": [
+        {
+          "text": "7",
+          "correct": true
+        },
+        {
+          "text": "-7",
+          "misconception": "arguments-order-reversed"
+        },
+        {
+          "text": "10",
+          "misconception": "returns-first-argument"
+        }
+      ],
+      "hints": [
+        "Which argument goes to a, and which to b?"
+      ],
+      "feedback": {
+        "arguments-order-reversed": {
+          "plain": "The first argument (10) goes to a and the second (3) to b. a - b is 10 - 3 = 7."
+        },
+        "returns-first-argument": {
+          "plain": "The function returns a - b, which is 10 - 3 = 7. It does not just give back its first input."
+        }
+      }
+    },
+    {
+      "kind": "generated",
+      "id": "recursion-base-case",
+      "concept": "recursion",
+      "difficulty": 3,
+      "generator": "recursion.base-case"
+    },
+    {
+      "kind": "static",
+      "id": "recursion-no-base",
+      "concept": "recursion",
+      "difficulty": 2,
+      "prompt": "What happens when this runs?",
+      "code": "def f(n):\n    return n + f(n - 1)\nprint(f(3))",
+      "options": [
+        {
+          "text": "It crashes with an error (RecursionError)",
+          "correct": true
+        },
+        {
+          "text": "It prints 6",
+          "misconception": "recursion-ends-by-itself"
+        },
+        {
+          "text": "It prints 0",
+          "misconception": "recursion-ends-by-itself"
+        },
+        {
+          "text": "It prints 3",
+          "misconception": "recursion-runs-once"
+        }
+      ],
+      "hints": [
+        "Is there any line that stops the function from calling itself?"
+      ],
+      "feedback": {
+        "recursion-ends-by-itself": {
+          "plain": "Nothing stops the calls: f(3) calls f(2), then f(1), f(0), f(-1) and so on. Without a base case Python stops it with an error."
+        },
+        "recursion-runs-once": {
+          "plain": "f(3) calls f(2), which calls f(1) and so on. There is no end, so Python stops it with an error."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "recursion-order",
+      "concept": "recursion",
+      "difficulty": 3,
+      "prompt": "What does this print?",
+      "code": "def show(n):\n    if n > 0:\n        show(n - 1)\n        print(n)\nshow(3)",
+      "options": [
+        {
+          "text": "1  2  3",
+          "correct": true
+        },
+        {
+          "text": "3  2  1",
+          "misconception": "recursion-order-reversed"
+        },
+        {
+          "text": "3",
+          "misconception": "recursion-runs-once"
+        }
+      ],
+      "hints": [
+        "The print is after the recursive call. When does it run?"
+      ],
+      "feedback": {
+        "recursion-order-reversed": {
+          "plain": "show(3) first calls show(2), which first calls show(1). show(1) finishes first and prints 1, then show(2) prints 2, then show(3) prints 3."
+        },
+        "recursion-runs-once": {
+          "plain": "show(3) calls show(2), which calls show(1). Each call prints its own n after the call below it is finished, so all three numbers are printed."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "recursion-total",
+      "concept": "recursion",
+      "difficulty": 3,
+      "prompt": "What does this print?",
+      "code": "def total(n):\n    if n == 0:\n        return 0\n    return n + total(n - 1)\nprint(total(4))",
+      "options": [
+        {
+          "text": "10",
+          "correct": true
+        },
+        {
+          "text": "4",
+          "misconception": "recursion-forgets-pending-work"
+        },
+        {
+          "text": "0",
+          "misconception": "recursion-returns-base-value"
+        },
+        {
+          "text": "6",
+          "misconception": "recursion-skips-first-value"
+        }
+      ],
+      "hints": [
+        "total(4) = 4 + total(3). Keep going down to total(0)."
+      ],
+      "feedback": {
+        "recursion-forgets-pending-work": {
+          "plain": "Each call adds its own n to what comes back: 4 + 3 + 2 + 1 + 0 = 10."
+        },
+        "recursion-returns-base-value": {
+          "plain": "0 is only the base case value, where the chain stops. The calls above it add their n: the total is 10."
+        },
+        "recursion-skips-first-value": {
+          "plain": "total(4) is 4 + total(3), so 4 is included: 4 + 3 + 2 + 1 = 10."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "recursion-fact",
+      "concept": "recursion",
+      "difficulty": 2,
+      "prompt": "What does this print?",
+      "code": "def fact(n):\n    if n == 0:\n        return 1\n    return n * fact(n - 1)\nprint(fact(4))",
+      "options": [
+        {
+          "text": "24",
+          "correct": true
+        },
+        {
+          "text": "10",
+          "misconception": "recursion-adds-instead"
+        },
+        {
+          "text": "4",
+          "misconception": "recursion-forgets-pending-work"
+        },
+        {
+          "text": "1",
+          "misconception": "recursion-returns-base-value"
+        }
+      ],
+      "hints": [
+        "Is it n * fact(n - 1) or n + fact(n - 1)?"
+      ],
+      "feedback": {
+        "recursion-adds-instead": {
+          "plain": "The code multiplies: 4 * 3 * 2 * 1 = 24. It does not add."
+        },
+        "recursion-forgets-pending-work": {
+          "plain": "fact(4) is 4 * fact(3), so the answer is not just 4. It is 4 * 3 * 2 * 1 = 24."
+        },
+        "recursion-returns-base-value": {
+          "plain": "1 is the base case value. The calls above it multiply their n onto it: 4 * 3 * 2 * 1 = 24."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "recursion-count",
+      "concept": "recursion",
+      "difficulty": 2,
+      "prompt": "How many times is f called in total (including the first call)?",
+      "code": "def f(n):\n    if n == 0:\n        return\n    f(n - 1)\nf(3)",
+      "options": [
+        {
+          "text": "4",
+          "correct": true
+        },
+        {
+          "text": "3",
+          "misconception": "recursion-skips-base-call"
+        },
+        {
+          "text": "1",
+          "misconception": "recursion-counts-top-call-only"
+        }
+      ],
+      "hints": [
+        "List every call: f(3), then the call it makes, and so on until n is 0."
+      ],
+      "feedback": {
+        "recursion-skips-base-call": {
+          "plain": "f(3), f(2), f(1) and f(0) are all calls. f(0) stops the chain but it is still a call, so there are 4."
+        },
+        "recursion-counts-top-call-only": {
+          "plain": "Each call makes the next one: f(3), f(2), f(1), f(0). That is 4 calls."
+        }
+      }
+    }
   ]
 }

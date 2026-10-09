@@ -1,0 +1,787 @@
+{
+  "schemaVersion": 1,
+  "id": "seasons-basics",
+  "title": "Seasons and the Earth",
+  "subject": "Science (Earth and Space)",
+  "version": "0.1.0",
+  "description": "A small second pack, in a different subject, that proves the engine works with any content. Written with AI help; every question must be reviewed by a person (see docs/CONTENT_REVIEW.md).",
+  "concepts": [
+    {
+      "id": "earth-motion",
+      "title": "How Earth moves",
+      "summary": "Earth spins once a day (rotation) and travels around the Sun once a year (orbit).",
+      "prerequisites": [],
+      "keywords": [
+        "earth",
+        "rotate",
+        "rotation",
+        "spin",
+        "spins",
+        "orbit",
+        "orbits",
+        "revolve",
+        "day",
+        "night",
+        "year",
+        "sun",
+        "moon",
+        "axis"
+      ],
+      "explanations": {
+        "plain": "Earth does two things at once. It spins on its axis, an imaginary line through the North and South Poles, once every 24 hours. That spin gives us day and night. Earth also travels around the Sun along a path called an orbit. One trip takes about 365 days, which is one year.",
+        "analogy": "Picture a spinning top that also slides in a big circle around a lamp. One spin of the top is one day. One full circle around the lamp is one year."
+      },
+      "teachBack": [
+        {
+          "id": "rotation-day",
+          "label": "Earth spins once a day, which gives day and night",
+          "keywords": [
+            "spin",
+            "spins",
+            "rotate",
+            "rotation",
+            "24 hours",
+            "day and night"
+          ]
+        },
+        {
+          "id": "orbit-year",
+          "label": "Earth orbits the Sun once in about 365 days, which is a year",
+          "keywords": [
+            "orbit",
+            "orbits",
+            "365",
+            "year",
+            "around the sun"
+          ]
+        },
+        {
+          "id": "two-motions",
+          "label": "spinning and orbiting are two different motions",
+          "keywords": [
+            "two",
+            "different",
+            "both",
+            "also"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "seasons-cause",
+      "title": "Why we have seasons",
+      "summary": "Seasons happen because Earth's axis is tilted about 23.5 degrees, not because Earth is nearer to or farther from the Sun.",
+      "prerequisites": [
+        "earth-motion"
+      ],
+      "keywords": [
+        "season",
+        "seasons",
+        "summer",
+        "winter",
+        "spring",
+        "autumn",
+        "tilt",
+        "tilted",
+        "axis",
+        "distance",
+        "closer",
+        "farther",
+        "hot",
+        "cold",
+        "degrees"
+      ],
+      "explanations": {
+        "plain": "Earth's axis is tilted by about 23.5 degrees, and it keeps pointing the same way in space while Earth orbits the Sun. So for part of the year the Northern Hemisphere leans toward the Sun, and for part of the year it leans away. Leaning toward the Sun gives summer. Leaning away gives winter. Distance is not the cause: Earth is actually closest to the Sun in early January, in the middle of the northern winter.",
+        "counterexample": "If distance caused the seasons, the whole Earth would have summer at the same time. But when it is summer in Canada it is winter in Australia. Distance cannot do that. Tilt can.",
+        "worked-example": "In June the North Pole leans toward the Sun, so the north has summer and the south has winter. Six months later, in December, Earth is on the other side of its orbit. The axis still points the same way, so now the south leans toward the Sun and has summer, while the north has winter.",
+        "analogy": "Push a stick through a ball, tilt it, and carry it around a lamp without changing which way the stick points. Sometimes the top half leans toward the lamp and sometimes away. The distance to the lamp hardly changes, but the lean does."
+      },
+      "teachBack": [
+        {
+          "id": "tilt",
+          "label": "Earth's axis is tilted by about 23.5 degrees",
+          "keywords": [
+            "tilt",
+            "tilted",
+            "23",
+            "lean",
+            "leans",
+            "angle"
+          ]
+        },
+        {
+          "id": "same-direction",
+          "label": "the axis keeps pointing the same way as Earth orbits",
+          "keywords": [
+            "same way",
+            "same direction",
+            "keeps pointing",
+            "points"
+          ]
+        },
+        {
+          "id": "not-distance",
+          "label": "seasons are not caused by Earth being closer or farther from the Sun",
+          "keywords": [
+            "not distance",
+            "not closer",
+            "not because",
+            "distance is not",
+            "isn't distance",
+            "not the distance"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "seasons-effects",
+      "title": "What the seasons change",
+      "summary": "Tilt changes how long the days are and how directly sunlight strikes, so one hemisphere is warm while the other is cold.",
+      "prerequisites": [
+        "seasons-cause"
+      ],
+      "keywords": [
+        "summer",
+        "winter",
+        "hemisphere",
+        "north",
+        "south",
+        "australia",
+        "daylight",
+        "longer",
+        "shorter",
+        "equinox",
+        "solstice",
+        "sunlight",
+        "angle",
+        "direct",
+        "opposite",
+        "hotter",
+        "warmer",
+        "colder",
+        "cooler",
+        "warm",
+        "temperature"
+      ],
+      "explanations": {
+        "plain": "When a hemisphere leans toward the Sun, its days are longer and the Sun climbs higher in the sky. Sunlight then hits the ground more directly and warms it more. When the hemisphere leans away, days are shorter and sunlight arrives at a slant, spread over more ground. The two hemispheres always have opposite seasons. Twice a year, at the equinoxes (around 21 March and 23 September), day and night are nearly equal everywhere.",
+        "analogy": "Shine a torch straight down onto a table: you get a small, bright circle. Tilt the torch: the same light spreads into a bigger, dimmer oval. Summer sunlight is the straight torch. Winter sunlight is the tilted one."
+      },
+      "teachBack": [
+        {
+          "id": "opposite",
+          "label": "the two hemispheres have opposite seasons",
+          "keywords": [
+            "opposite",
+            "other hemisphere",
+            "australia",
+            "south"
+          ]
+        },
+        {
+          "id": "longer-days",
+          "label": "leaning toward the Sun gives longer days",
+          "keywords": [
+            "longer",
+            "more daylight",
+            "long days"
+          ]
+        },
+        {
+          "id": "direct-light",
+          "label": "a higher Sun means more direct light, which warms more",
+          "keywords": [
+            "direct",
+            "angle",
+            "higher",
+            "steeper",
+            "concentrated"
+          ]
+        }
+      ]
+    }
+  ],
+  "misconceptions": [
+    {
+      "id": "day-night-from-orbit",
+      "concept": "earth-motion",
+      "title": "Day and night from the orbit",
+      "description": "thinks day and night come from Earth moving around the Sun",
+      "explanations": {
+        "plain": "Day and night come from Earth spinning on its axis once every 24 hours. The orbit takes a whole year."
+      }
+    },
+    {
+      "id": "sun-orbits-earth",
+      "concept": "earth-motion",
+      "title": "The Sun goes around Earth",
+      "description": "thinks the Sun moves around Earth to make day and night",
+      "explanations": {
+        "plain": "It looks like the Sun moves across the sky, but that is because Earth spins."
+      }
+    },
+    {
+      "id": "moon-blocks-sun",
+      "concept": "earth-motion",
+      "title": "The Moon causes night",
+      "description": "thinks the Moon covers the Sun at night",
+      "explanations": {
+        "plain": "Night happens because our side of Earth has turned away from the Sun. The Moon has nothing to do with it."
+      }
+    },
+    {
+      "id": "year-is-rotation",
+      "concept": "earth-motion",
+      "title": "A year is one spin",
+      "description": "thinks Earth's orbit takes one day",
+      "explanations": {
+        "plain": "One spin takes a day. One trip around the Sun takes about 365 days, a year."
+      }
+    },
+    {
+      "id": "orbit-time-is-month",
+      "concept": "earth-motion",
+      "title": "The orbit takes a month",
+      "description": "thinks Earth goes around the Sun in about a month",
+      "explanations": {
+        "plain": "About a month is how long the Moon takes to go around Earth. Earth takes a year to go around the Sun."
+      }
+    },
+    {
+      "id": "rotation-orbit-swapped",
+      "concept": "earth-motion",
+      "title": "Spin and orbit swapped",
+      "description": "thinks Earth spins once a year and orbits once a day",
+      "explanations": {
+        "plain": "Earth spins once a day and orbits the Sun once a year."
+      }
+    },
+    {
+      "id": "seasons-from-distance",
+      "concept": "seasons-cause",
+      "title": "Seasons come from distance",
+      "description": "thinks it is summer when Earth is closer to the Sun and winter when it is farther",
+      "explanations": {
+        "plain": "Earth is closest to the Sun in early January, in northern winter. Seasons come from the tilt of the axis."
+      }
+    },
+    {
+      "id": "moon-causes-seasons",
+      "concept": "seasons-cause",
+      "title": "The Moon causes seasons",
+      "description": "thinks the Moon's pull changes the seasons",
+      "explanations": {
+        "plain": "The Moon causes tides, not seasons. Seasons come from the tilt of Earth's axis."
+      }
+    },
+    {
+      "id": "sun-gets-hotter-and-cooler",
+      "concept": "seasons-cause",
+      "title": "The Sun changes its heat",
+      "description": "thinks the Sun gives out more energy in summer and less in winter",
+      "explanations": {
+        "plain": "The Sun gives out almost the same energy all year. Tilt changes how directly the light hits each place."
+      }
+    },
+    {
+      "id": "orbit-is-perfect-circle",
+      "concept": "seasons-cause",
+      "title": "The orbit is a perfect circle",
+      "description": "thinks Earth is always exactly the same distance from the Sun",
+      "explanations": {
+        "plain": "Earth's orbit is slightly squashed. The distance changes a little (about 3 percent), and Earth is closest in early January."
+      }
+    },
+    {
+      "id": "axis-tilt-too-large",
+      "concept": "seasons-cause",
+      "title": "Tilt is much bigger",
+      "description": "thinks the tilt is 45 or 90 degrees",
+      "explanations": {
+        "plain": "The tilt is about 23.5 degrees, a lot smaller than 45 or 90."
+      }
+    },
+    {
+      "id": "no-tilt",
+      "concept": "seasons-cause",
+      "title": "Earth has no tilt",
+      "description": "thinks Earth's axis is straight up and down",
+      "explanations": {
+        "plain": "Earth's axis is tilted by about 23.5 degrees. That tilt is why we have seasons."
+      }
+    },
+    {
+      "id": "no-tilt-means-always-summer",
+      "concept": "seasons-cause",
+      "title": "No tilt means always summer",
+      "description": "thinks without a tilt it would be summer everywhere all year",
+      "explanations": {
+        "plain": "Without a tilt no place would lean toward or away from the Sun, so the seasons would almost disappear."
+      }
+    },
+    {
+      "id": "no-tilt-means-stronger-seasons",
+      "concept": "seasons-cause",
+      "title": "No tilt means stronger seasons",
+      "description": "thinks without a tilt the seasons would be stronger",
+      "explanations": {
+        "plain": "The tilt creates the seasons, so with no tilt there would be almost none."
+      }
+    },
+    {
+      "id": "same-season-everywhere",
+      "concept": "seasons-effects",
+      "title": "Same season everywhere",
+      "description": "thinks both hemispheres have the same season at the same time",
+      "explanations": {
+        "plain": "When the north leans toward the Sun the south leans away, so the seasons are opposite."
+      }
+    },
+    {
+      "id": "seasons-offset-by-one",
+      "concept": "seasons-effects",
+      "title": "Seasons shifted by a step",
+      "description": "thinks the other hemisphere has spring or autumn when one has summer",
+      "explanations": {
+        "plain": "When it is summer in one hemisphere it is winter in the other, not spring or autumn."
+      }
+    },
+    {
+      "id": "summer-sun-moves-slower",
+      "concept": "seasons-effects",
+      "title": "The summer Sun moves slower",
+      "description": "thinks the days are longer because the Sun moves more slowly",
+      "explanations": {
+        "plain": "The Sun does not change speed. In summer its path across the sky is higher and longer, so there is more daylight."
+      }
+    },
+    {
+      "id": "equinox-is-longest-day",
+      "concept": "seasons-effects",
+      "title": "Equinox is the longest day",
+      "description": "thinks the equinox is the longest day of the year",
+      "explanations": {
+        "plain": "The longest day is the summer solstice. At the equinox day and night are nearly equal."
+      }
+    },
+    {
+      "id": "equinox-is-closest",
+      "concept": "seasons-effects",
+      "title": "Equinox is when Earth is closest",
+      "description": "thinks the equinox happens when Earth is closest to the Sun",
+      "explanations": {
+        "plain": "The equinox is about the tilt, not the distance. At the equinox neither hemisphere leans toward the Sun."
+      }
+    }
+  ],
+  "questions": [
+    {
+      "kind": "static",
+      "id": "earth-spin-day",
+      "concept": "earth-motion",
+      "difficulty": 1,
+      "prompt": "What causes day and night?",
+      "options": [
+        {
+          "text": "Earth spinning on its axis",
+          "correct": true
+        },
+        {
+          "text": "Earth moving around the Sun",
+          "misconception": "day-night-from-orbit"
+        },
+        {
+          "text": "The Sun moving around Earth",
+          "misconception": "sun-orbits-earth"
+        },
+        {
+          "text": "The Moon blocking the Sun",
+          "misconception": "moon-blocks-sun"
+        }
+      ],
+      "hints": [
+        "Which motion takes 24 hours?"
+      ],
+      "feedback": {
+        "day-night-from-orbit": {
+          "plain": "One trip around the Sun takes a year, so it cannot make day and night every 24 hours. Earth's spin does."
+        },
+        "sun-orbits-earth": {
+          "plain": "The Sun seems to cross the sky, but that is because Earth is spinning. Earth turns once every 24 hours."
+        },
+        "moon-blocks-sun": {
+          "plain": "The Moon does not make night. Night is when our side of Earth has turned away from the Sun."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "earth-orbit-year",
+      "concept": "earth-motion",
+      "difficulty": 1,
+      "prompt": "About how long does Earth take to go around the Sun once?",
+      "options": [
+        {
+          "text": "About 365 days",
+          "correct": true
+        },
+        {
+          "text": "24 hours",
+          "misconception": "year-is-rotation"
+        },
+        {
+          "text": "About 30 days",
+          "misconception": "orbit-time-is-month"
+        }
+      ],
+      "hints": [
+        "Think of how many days are in a year."
+      ],
+      "feedback": {
+        "year-is-rotation": {
+          "plain": "24 hours is how long Earth takes to spin once. A trip around the Sun takes about 365 days."
+        },
+        "orbit-time-is-month": {
+          "plain": "About 30 days is roughly how long the Moon takes to go around Earth. Earth needs about 365 days to go around the Sun."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "earth-spin-vs-orbit",
+      "concept": "earth-motion",
+      "difficulty": 2,
+      "prompt": "Which statement is true?",
+      "options": [
+        {
+          "text": "Earth spins once a day and orbits the Sun once a year",
+          "correct": true
+        },
+        {
+          "text": "Earth spins once a year and orbits the Sun once a day",
+          "misconception": "rotation-orbit-swapped"
+        },
+        {
+          "text": "Earth spins and orbits the Sun once a day",
+          "misconception": "year-is-rotation"
+        }
+      ],
+      "hints": [
+        "Which motion gives day and night, and which gives the year?"
+      ],
+      "feedback": {
+        "rotation-orbit-swapped": {
+          "plain": "It is the other way round: the spin takes a day and the orbit takes a year."
+        },
+        "year-is-rotation": {
+          "plain": "The orbit takes about 365 days, not one day. Only the spin takes one day."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "seasons-why",
+      "concept": "seasons-cause",
+      "difficulty": 2,
+      "prompt": "Why do we have seasons?",
+      "options": [
+        {
+          "text": "Earth's axis is tilted",
+          "correct": true
+        },
+        {
+          "text": "Earth is closer to the Sun in summer",
+          "misconception": "seasons-from-distance"
+        },
+        {
+          "text": "The Moon's pull changes through the year",
+          "misconception": "moon-causes-seasons"
+        },
+        {
+          "text": "The Sun gives out more energy in summer",
+          "misconception": "sun-gets-hotter-and-cooler"
+        }
+      ],
+      "hints": [
+        "When it is summer in Canada, what season is it in Australia?",
+        "Could distance explain opposite seasons at the same time?"
+      ],
+      "feedback": {
+        "seasons-from-distance": {
+          "plain": "If distance caused seasons, the whole Earth would have summer together. Canada and Australia have opposite seasons, so distance cannot be the cause. The tilt is."
+        },
+        "moon-causes-seasons": {
+          "plain": "The Moon causes tides. It does not cause seasons. Tilt does."
+        },
+        "sun-gets-hotter-and-cooler": {
+          "plain": "The Sun gives out almost the same energy all year. The tilt changes how directly its light hits each place."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "seasons-closest",
+      "concept": "seasons-cause",
+      "difficulty": 3,
+      "prompt": "When is Earth closest to the Sun?",
+      "options": [
+        {
+          "text": "In early January",
+          "correct": true
+        },
+        {
+          "text": "In June, in the middle of the northern summer",
+          "misconception": "seasons-from-distance"
+        },
+        {
+          "text": "It is always exactly the same distance",
+          "misconception": "orbit-is-perfect-circle"
+        }
+      ],
+      "hints": [
+        "Is it summer or winter in the north in early January?"
+      ],
+      "feedback": {
+        "seasons-from-distance": {
+          "plain": "Earth is not closest in June. It is closest in early January, when the north has winter. That shows distance is not what makes summer."
+        },
+        "orbit-is-perfect-circle": {
+          "plain": "The orbit is slightly squashed, so the distance changes a little during the year. Earth is closest in early January."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "seasons-tilt-size",
+      "concept": "seasons-cause",
+      "difficulty": 2,
+      "prompt": "About how big is the tilt of Earth's axis?",
+      "options": [
+        {
+          "text": "About 23.5 degrees",
+          "correct": true
+        },
+        {
+          "text": "About 45 degrees",
+          "misconception": "axis-tilt-too-large"
+        },
+        {
+          "text": "About 90 degrees",
+          "misconception": "axis-tilt-too-large"
+        },
+        {
+          "text": "0 degrees (no tilt)",
+          "misconception": "no-tilt"
+        }
+      ],
+      "hints": [
+        "It is a fairly small angle."
+      ],
+      "feedback": {
+        "axis-tilt-too-large": {
+          "plain": "The tilt is about 23.5 degrees. 45 or 90 degrees would be a much bigger lean."
+        },
+        "no-tilt": {
+          "plain": "Earth's axis is tilted by about 23.5 degrees. Without a tilt there would be almost no seasons."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "seasons-no-tilt",
+      "concept": "seasons-cause",
+      "difficulty": 3,
+      "prompt": "What would happen to the seasons if Earth had no tilt?",
+      "options": [
+        {
+          "text": "There would be almost no seasons",
+          "correct": true
+        },
+        {
+          "text": "It would be summer everywhere all year",
+          "misconception": "no-tilt-means-always-summer"
+        },
+        {
+          "text": "The seasons would be stronger",
+          "misconception": "no-tilt-means-stronger-seasons"
+        }
+      ],
+      "hints": [
+        "What makes one hemisphere lean toward the Sun?"
+      ],
+      "feedback": {
+        "no-tilt-means-always-summer": {
+          "plain": "Without a tilt no place would lean toward the Sun for part of the year, so there would be no special warm season either."
+        },
+        "no-tilt-means-stronger-seasons": {
+          "plain": "The tilt is what makes the seasons, so removing it removes them. There would be almost none."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "effects-opposite",
+      "concept": "seasons-effects",
+      "difficulty": 1,
+      "prompt": "In December it is summer in Australia. What season is it in Canada?",
+      "options": [
+        {
+          "text": "Winter",
+          "correct": true
+        },
+        {
+          "text": "Summer",
+          "misconception": "same-season-everywhere"
+        },
+        {
+          "text": "Spring",
+          "misconception": "seasons-offset-by-one"
+        },
+        {
+          "text": "Autumn",
+          "misconception": "seasons-offset-by-one"
+        }
+      ],
+      "hints": [
+        "When one hemisphere leans toward the Sun, the other leans away."
+      ],
+      "feedback": {
+        "same-season-everywhere": {
+          "plain": "The hemispheres have opposite seasons. When Australia leans toward the Sun, Canada leans away, so Canada has winter."
+        },
+        "seasons-offset-by-one": {
+          "plain": "The seasons are exactly opposite: summer in one hemisphere is winter in the other."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "effects-long-days",
+      "concept": "seasons-effects",
+      "difficulty": 2,
+      "prompt": "Why are the days longer in summer?",
+      "options": [
+        {
+          "text": "The hemisphere is tilted toward the Sun",
+          "correct": true
+        },
+        {
+          "text": "Earth is closer to the Sun",
+          "misconception": "seasons-from-distance"
+        },
+        {
+          "text": "The Sun moves more slowly across the sky",
+          "misconception": "summer-sun-moves-slower"
+        }
+      ],
+      "hints": [
+        "What does the tilt do to the Sun's path across the sky?"
+      ],
+      "feedback": {
+        "seasons-from-distance": {
+          "plain": "Distance does not change the length of the day. The tilt does: a hemisphere leaning toward the Sun spends more of each day in sunlight."
+        },
+        "summer-sun-moves-slower": {
+          "plain": "The Sun does not change speed. With the tilt toward the Sun, its path across the sky is higher and longer, so the day lasts longer."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "effects-intensity",
+      "concept": "seasons-effects",
+      "difficulty": 3,
+      "prompt": "Why is sunlight warmer in summer?",
+      "options": [
+        {
+          "text": "It hits the ground more directly, so the same light covers less ground",
+          "correct": true
+        },
+        {
+          "text": "The Sun gives out more energy in summer",
+          "misconception": "sun-gets-hotter-and-cooler"
+        },
+        {
+          "text": "Earth is closer to the Sun in summer",
+          "misconception": "seasons-from-distance"
+        }
+      ],
+      "hints": [
+        "Think of a torch pointed straight down compared with a torch held at a slant."
+      ],
+      "feedback": {
+        "sun-gets-hotter-and-cooler": {
+          "plain": "The Sun's output hardly changes. What changes is the angle at which its light hits the ground."
+        },
+        "seasons-from-distance": {
+          "plain": "Earth is not closer in summer. The light is warmer because it hits the ground more directly."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "effects-equinox",
+      "concept": "seasons-effects",
+      "difficulty": 3,
+      "prompt": "What is true at an equinox (around 21 March and 23 September)?",
+      "options": [
+        {
+          "text": "Day and night are nearly equal everywhere",
+          "correct": true
+        },
+        {
+          "text": "It is the longest day of the year",
+          "misconception": "equinox-is-longest-day"
+        },
+        {
+          "text": "Earth is closest to the Sun",
+          "misconception": "equinox-is-closest"
+        }
+      ],
+      "hints": [
+        "The word equinox means 'equal night'."
+      ],
+      "feedback": {
+        "equinox-is-longest-day": {
+          "plain": "The longest day is the summer solstice. At an equinox, day and night are nearly equal."
+        },
+        "equinox-is-closest": {
+          "plain": "The equinox is about the tilt, not the distance. At an equinox neither hemisphere leans toward the Sun."
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "id": "effects-winter-north",
+      "concept": "seasons-effects",
+      "difficulty": 2,
+      "prompt": "Why is it winter in the Northern Hemisphere in December?",
+      "options": [
+        {
+          "text": "The Northern Hemisphere is tilted away from the Sun",
+          "correct": true
+        },
+        {
+          "text": "Earth is farthest from the Sun in December",
+          "misconception": "seasons-from-distance"
+        },
+        {
+          "text": "The Sun is weaker in December",
+          "misconception": "sun-gets-hotter-and-cooler"
+        }
+      ],
+      "hints": [
+        "In December the southern half has summer. What does that tell you about the tilt?"
+      ],
+      "feedback": {
+        "seasons-from-distance": {
+          "plain": "Earth is actually closest to the Sun in early January. Winter in the north comes from the tilt away from the Sun."
+        },
+        "sun-gets-hotter-and-cooler": {
+          "plain": "The Sun does not get weaker in December. The northern half of Earth leans away from it, so its light arrives at a slant."
+        }
+      }
+    }
+  ]
+}

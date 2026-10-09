@@ -20,6 +20,8 @@ const pct = (x: { p: number; ci: number }) => `${(x.p * 100).toFixed(1)}% (±${(
 const t0 = performance.now();
 const res = { nova: resolutionExperiment(input, 'nova'), baseline: resolutionExperiment(input, 'baseline') };
 const dia = { nova: diagnosisExperiment(input, 'nova'), baseline: diagnosisExperiment(input, 'baseline') };
+const ideal: SimInput = { pack, generators, cfg: { ...DEFAULT_SIM, pHold: 1, pSlip: 0, pLearnMatch: 1, pLearnMismatch: 1, budget: 60 } };
+const idealRes = { nova: resolutionExperiment(ideal, 'nova'), baseline: resolutionExperiment(ideal, 'baseline') };
 const simSeconds = (performance.now() - t0) / 1000;
 
 // ---- engine timing (microseconds per call)
@@ -58,6 +60,14 @@ Pack: **${pack.id}** v${pack.version}. Budget: ${DEFAULT_SIM.budget} questions p
 | Mean wrong answers | ${res.nova.meanWrongAnswers.toFixed(1)} | ${res.baseline.meanWrongAnswers.toFixed(1)} |
 | Explanations given in the learner's best style | ${(res.nova.bestStyleShare * 100).toFixed(1)}% | ${(res.baseline.bestStyleShare * 100).toFixed(1)}% |
 
+### Experiment C: an ideal learner (always falls into a mistake when offered, always learns from an explanation, never slips; budget 60 questions)
+This removes the learner assumptions, so it shows only what the **content and the engine** can do.
+| | NOVA | Baseline (memoryless) |
+|---|---|---|
+| Share of a learner's mistakes that some asked question offered as a wrong answer | ${(idealRes.nova.mistakesOfferedShare * 100).toFixed(1)}% | ${(idealRes.baseline.mistakesOfferedShare * 100).toFixed(1)}% |
+| Learners fully resolved within 60 questions | ${pct(idealRes.nova.resolvedWithinBudget)} | ${pct(idealRes.baseline.resolvedWithinBudget)} |
+| Learners left with a mistake that a question had already offered but that was not fixed | ${(idealRes.nova.unfixedOfferedShare * 100).toFixed(1)}% | ${(idealRes.baseline.unfixedOfferedShare * 100).toFixed(1)}% |
+
 ### Experiment B: does the system find the right mistakes? (teaching switched off, ${DEFAULT_SIM.diagnosisQuestions} questions)
 | | NOVA | Baseline |
 |---|---|---|
@@ -74,5 +84,5 @@ Learner export (Aarav, 15 answers): ${(exportBytes / 1024).toFixed(1)} KB. Simul
 `;
 mkdirSync('docs/evidence-data', { recursive: true });
 writeFileSync('docs/evidence-data/simulation.md', md);
-writeFileSync('docs/evidence-data/simulation.json', JSON.stringify({ config: DEFAULT_SIM, resolution: res, diagnosis: dia, timingsUs: timings, exportBytes }, null, 2) + '\n');
+writeFileSync('docs/evidence-data/simulation.json', JSON.stringify({ config: DEFAULT_SIM, resolution: res, ideal: idealRes, diagnosis: dia, timingsUs: timings, exportBytes }, null, 2) + '\n');
 console.log(md);

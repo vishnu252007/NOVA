@@ -11,7 +11,7 @@ export interface ValidationReport {
 
 const GENERATED_SAMPLES = 100;
 
-function checkBody(where: string, body: QuestionBody, miscIds: Set<MisconceptionId>, errors: string[]) {
+function checkBody(where: string, body: QuestionBody, miscIds: Set<MisconceptionId>, errors: string[], offered?: Set<MisconceptionId>) {
   if (!body.prompt?.trim()) errors.push(`${where}: empty prompt`);
   if (body.options.length < 2) errors.push(`${where}: needs at least 2 options`);
   const correct = body.options.filter((o) => o.correct);
@@ -20,6 +20,7 @@ function checkBody(where: string, body: QuestionBody, miscIds: Set<Misconception
   if (texts.size !== body.options.length) errors.push(`${where}: duplicate option text`);
   for (const o of body.options) {
     if (o.correct) continue;
+    if (o.misconception) offered?.add(o.misconception);
     if (!o.misconception) errors.push(`${where}: wrong option "${o.text}" has no misconception tag`);
     else if (!miscIds.has(o.misconception)) errors.push(`${where}: unknown misconception "${o.misconception}"`);
     else if (!body.feedback?.[o.misconception]?.plain) errors.push(`${where}: no feedback.plain for "${o.misconception}"`);
@@ -57,21 +58,25 @@ export function validatePack(pack: ContentPack, generators: GeneratorRegistry): 
     for (const s of Object.keys(m.explanations)) if (!(EXPLANATION_STYLES as readonly string[]).includes(s)) errors.push(`misconception "${m.id}": unknown style "${s}"`);
   }
 
+  const offered = new Set<MisconceptionId>(); // mistakes some question can actually reveal
   for (const q of pack.questions) {
     const where = `question "${q.id}"`;
     if (!conceptIds.has(q.concept)) { errors.push(`${where}: unknown concept "${q.concept}"`); continue; }
-    if (q.kind === 'static') { checkBody(where, q, miscIds, errors); continue; }
+    if (q.kind === 'static') { checkBody(where, q, miscIds, errors, offered); continue; }
     if (!generators.get(q.generator)) { errors.push(`${where}: generator "${q.generator}" is not registered`); continue; }
     for (let seed = 1; seed <= GENERATED_SAMPLES; seed++) {
       try {
         const built = materializeQuestion(q, generators, seed);
-        checkBody(`${where} seed ${seed}`, built, miscIds, errors);
+        checkBody(`${where} seed ${seed}`, built, miscIds, errors, offered);
       } catch (e) {
         errors.push(`${where} seed ${seed}: ${(e as Error).message}`);
         break;
       }
       if (errors.length > 50) break;
     }
+  }
+  for (const m of pack.misconceptions) {
+    if (!offered.has(m.id)) warnings.push(`misconception "${m.id}" is never offered as a wrong answer by any question, so NOVA can never find it`);
   }
   return { errors, warnings };
 }

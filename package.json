@@ -14,7 +14,9 @@
     "validate:content": "tsx scripts/validate-content.ts",
     "check": "npm run typecheck && npm run test && npm run validate:content",
     "check:offline": "tsx scripts/check-offline-build.ts",
-    "evidence": "tsx scripts/run-evidence.ts"
+    "evidence": "tsx scripts/run-evidence.ts",
+    "verify:content": "tsx scripts/verify-content.ts",
+    "content:review": "tsx scripts/export-content-review.ts"
   },
   "dependencies": {
     "dexie": "^4.4.6",

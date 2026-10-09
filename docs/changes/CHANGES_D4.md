@@ -1,3 +1,5 @@
+> **SUPERSEDED (Phase B):** the headline simulation results below were measured on the small sample pack and no longer hold. See `docs/EVIDENCE.md` for the current results.
+
 # Change note: task D4 (evidence pack)
 
 ## What is new

@@ -69,6 +69,8 @@ export interface RunResult {
   interventions: number;
   interventionsInBestStyle: number;
   predictedActive: Set<MisconceptionId>; // what the system believed at the end
+  offeredShare: number; // share of the learner's mistakes that at least one asked question offered as a wrong answer
+  hiddenButOffered: number; // mistakes still hidden at the end although a question offered them
 }
 
 /** One learner through one policy. `learning=false` turns teaching off (used for the diagnosis experiment). */
@@ -88,6 +90,7 @@ export function runLearner(i: SimInput, index: number, policy: Policy, budget: n
   let afterStyle: ExplanationStyle | undefined;
   let diagnosticDone = policy === 'baseline';
   const diagEvents: AttemptEvent[] = [];
+  const offered = new Set<MisconceptionId>(); // wrong answers the asked questions made possible
 
   while (attempts < budget) {
     let q: Question | null = null;
@@ -107,6 +110,7 @@ export function runLearner(i: SimInput, index: number, policy: Policy, budget: n
     }
     if (!q) break;
 
+    q.options.forEach((o) => o.misconception && offered.add(o.misconception));
     const { option, fell } = answer(l, q, r, cfg);
     const correct = !!option.correct;
     const ev: AttemptEvent = {
@@ -138,7 +142,11 @@ export function runLearner(i: SimInput, index: number, policy: Policy, budget: n
   const predictedActive = policy === 'nova'
     ? new Set(Object.entries(state.misconceptions).filter(([, m]) => m.status === 'active').map(([id]) => id))
     : seen;
-  return { attempts, resolvedAt, wrong, interventions, interventionsInBestStyle: inBest, predictedActive };
+  return {
+    attempts, resolvedAt, wrong, interventions, interventionsInBestStyle: inBest, predictedActive,
+    offeredShare: l.initial.length ? l.initial.filter((m) => offered.has(m)).length / l.initial.length : 1,
+    hiddenButOffered: [...l.hidden].filter((m) => offered.has(m)).length,
+  };
 }
 
 // ---------- summaries ----------
@@ -155,6 +163,8 @@ export interface ResolutionStats {
   meanAttemptsToResolve: number; ciAttempts: number; // unresolved learners count as the budget
   resolvedWithin20: { p: number; ci: number }; resolvedWithinBudget: { p: number; ci: number };
   meanWrongAnswers: number; bestStyleShare: number;
+  mistakesOfferedShare: number; // average share of a learner's mistakes that some asked question could reveal
+  unfixedOfferedShare: number; // share of learners left with a mistake that a question had offered but that was not fixed
 }
 export interface DiagnosisStats { policy: Policy; learners: number; precision: number; recall: number; f1: number }
 
@@ -169,6 +179,8 @@ export function resolutionExperiment(i: SimInput, policy: Policy): ResolutionSta
     resolvedWithinBudget: prop(runs.filter((x) => x.resolvedAt !== null).length, runs.length),
     meanWrongAnswers: mean(runs.map((x) => x.wrong)),
     bestStyleShare: inter ? runs.reduce((a, b) => a + b.interventionsInBestStyle, 0) / inter : 0,
+    mistakesOfferedShare: mean(runs.map((x) => x.offeredShare)),
+    unfixedOfferedShare: runs.filter((x) => x.hiddenButOffered > 0).length / runs.length,
   };
 }
 

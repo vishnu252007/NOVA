@@ -20,8 +20,10 @@ describe('buildConceptMap', () => {
 
   it('locked concepts say what unlocks them, and every concept says what it unlocks', () => {
     const m = buildConceptMap(pack, fresh());
-    // Variables has no questions, so it cannot block anyone: Lists is open for a new learner.
-    expect(m.nodes.find((n) => n.id === 'lists')!.status).toBe('new');
+    // Variables can be measured and is still at 0%, so it blocks Lists until the learner shows it.
+    const lists = m.nodes.find((n) => n.id === 'lists')!;
+    expect(lists.status).toBe('locked');
+    expect(lists.unlockBy).toEqual([{ id: 'variables', title: 'Variables', mastery: 0, met: false }]);
     // Loop bounds needs Loops and Lists, which CAN be measured and are still at 0%.
     const bounds = m.nodes.find((n) => n.id === 'loop-bounds')!;
     expect(bounds.status).toBe('locked');

@@ -2,47 +2,45 @@ import { describe, expect, it } from 'vitest';
 import {
   applyAttempt, buildConceptMap, conceptStatus, createLearner, isTestable, nextDiagnosticQuestion, planToday, prerequisiteMet,
 } from '@/core/engine';
-import type { AttemptEvent, ContentPack, QuestionSpec } from '@/core/types';
+import type { AttemptEvent, ContentPack } from '@/core/types';
 import { attempt, generators, NOW, pack } from '@/testkit';
 
 const fresh = () => createLearner('p1', pack, NOW);
 
-/** A copy of the pack where "variables" HAS a question, so it can be measured (and can lock others). */
-function packWithVariablesQuestion(): ContentPack {
-  const q: QuestionSpec = {
-    kind: 'static', id: 'variables-q1', concept: 'variables', difficulty: 1, prompt: 'x = 5. What is x?', hints: [],
-    options: [{ text: '5', correct: true }, { text: '6', misconception: 'index-starts-at-one' }],
-    feedback: { 'index-starts-at-one': { plain: 'x holds 5.' } },
-  };
-  return { ...structuredClone(pack), questions: [...pack.questions, q] };
+/** A copy of the pack where "variables" has NO questions, so it cannot be measured (and must not block anyone). */
+function packWithoutVariablesQuestions(): ContentPack {
+  return { ...structuredClone(pack), questions: pack.questions.filter((q) => q.concept !== 'variables') };
 }
 
 describe('lock rule: a topic that cannot be measured must not block others', () => {
+  const unmeasured = packWithoutVariablesQuestions();
+  const freshUnmeasured = () => createLearner('p2', unmeasured, NOW);
+
   it('knows which topics can be measured', () => {
-    expect(isTestable(pack, 'variables')).toBe(false); // sample pack has no Variables questions yet
-    expect(isTestable(pack, 'loops')).toBe(true);
+    expect(isTestable(pack, 'variables')).toBe(true); // the real pack now has Variables questions
+    expect(isTestable(unmeasured, 'variables')).toBe(false);
+    expect(isTestable(unmeasured, 'loops')).toBe(true);
   });
 
-  it('a new learner can open Lists and Loops even though Variables has no questions', () => {
-    expect(conceptStatus(fresh(), pack, 'lists')).toBe('new');
-    expect(conceptStatus(fresh(), pack, 'loops')).toBe('new');
-    expect(conceptStatus(fresh(), pack, 'loop-bounds')).toBe('locked'); // Loops and Lists are measurable and still at 0
+  it('a new learner can open Lists and Loops when Variables cannot be measured', () => {
+    expect(conceptStatus(freshUnmeasured(), unmeasured, 'lists')).toBe('new');
+    expect(conceptStatus(freshUnmeasured(), unmeasured, 'loops')).toBe('new');
+    expect(conceptStatus(freshUnmeasured(), unmeasured, 'loop-bounds')).toBe('locked'); // Loops and Lists are measurable and still at 0
   });
 
-  it('once Variables has questions, the normal lock rule applies again', () => {
-    const p = packWithVariablesQuestion();
-    const s = createLearner('p', p, NOW);
-    expect(conceptStatus(s, p, 'lists')).toBe('locked');
-    const answered = applyAttempt(s, attempt({ concept: 'variables', correct: true }), p);
+  it('when Variables has questions (the real pack), the normal lock rule applies', () => {
+    expect(conceptStatus(fresh(), pack, 'lists')).toBe('locked');
+    expect(conceptStatus(fresh(), pack, 'loops')).toBe('locked');
+    const answered = applyAttempt(fresh(), attempt({ concept: 'variables', correct: true }), pack);
     answered.concepts.variables!.mastery = 0.5;
-    expect(conceptStatus(answered, p, 'lists')).toBe('new');
+    expect(conceptStatus(answered, pack, 'lists')).toBe('new');
   });
 
   it('the concept map agrees with the lock rule (arrow is "met", no "To unlock" note)', () => {
-    const map = buildConceptMap(pack, fresh());
+    const map = buildConceptMap(unmeasured, freshUnmeasured());
     expect(map.edges.find((e) => e.from === 'variables' && e.to === 'lists')!.met).toBe(true);
     expect(map.nodes.find((n) => n.id === 'lists')!.unlockBy).toEqual([]);
-    expect(prerequisiteMet(fresh(), pack, 'variables')).toBe(true);
+    expect(prerequisiteMet(freshUnmeasured(), unmeasured, 'variables')).toBe(true);
   });
 
   it('a perfect quick check leaves no answered topic locked', () => {

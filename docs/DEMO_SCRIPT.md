@@ -27,7 +27,7 @@ Start the **timer** in the Demo tools when you start speaking.
 | 1:15 to 2:00 | Press **Open Aarav**, then **Start demo question**. Same question. Pick the same answer, **sure**, **Check answer**. | "Aarav, three weeks of history. This is sample data, and the screen says so. Same question, same wrong answer. But NOVA remembers that counterexamples worked for him, so he gets one." Open **Why this?**: "counterexample helped you before, 2 of 2." |
 | 2:00 to 2:25 | Press **Take the probe**, answer it correctly, press **End session**. | "NOVA checks the fix with a new question, not by trusting him. The mistake moves to fixed." (Summary shows **Fixed in this session**.) |
 | 2:25 to 2:45 | Press **Back to Home**. Point at the **Review** card. Optional: press **+7 days** ("I moved the clock for the demo"). | "It also schedules reviews, so what he learned does not fade. Tomorrow's plan comes from his own history." |
-| 2:45 to 3:00 | Stop the timer. | "The internet gives everyone the same AI. NOVA gives every student their own." Optional, if asked: "In simulation it got 98.6% of simulated learners to no remaining mistakes in 40 questions, against 90.4% for a tutor with no memory. That is prototype evidence, not student results." |
+| 2:45 to 3:00 | Stop the timer. | "The internet gives everyone the same AI. NOVA gives every student their own." Optional, if asked: "In a simulation, when NOVA flags a mistake it is right 83% of the time, while a tutor that flags every wrong answer is right 40% of the time. We also found where it must improve: it needs more questions per mistake." |
 
 ## If something goes wrong
 | Problem | Do |
@@ -56,9 +56,10 @@ Start the **timer** in the Demo tools when you start speaking.
 ## Questions judges may ask (honest answers)
 - **Is this just a quiz app?** A quiz scores. NOVA finds the specific mistake, teaches in the style that worked for this learner, proves the fix with a new question, and plans the next step.
 - **Where is the AI?** Say exactly what runs on demo day. Today the decisions (right or wrong, which mistake, which style, the plan) are made by code on purpose, so they are correct and explainable. A small on-device model only rewrites the verified explanation, and the app works without it (lite mode). If the model is not installed on the demo device, say so.
-- **How do you know it works?** 146 automated tests, plus simulated learners (`docs/EVIDENCE.md`). No real students have used it yet, so we make no learning claims.
+- **How do you know it works?** 172 automated tests, plus simulated learners (`docs/EVIDENCE.md`). No real students have used it yet, so we make no learning claims.
 - **Does it send data anywhere?** No. Data stays on the device. You can show the Network tab. Backup is a file the student saves.
 - **What if browser data is cleared?** The student keeps a backup file (Settings, Save a backup file) and can restore it.
-- **Low-resource devices?** The saved app is about 123 KB gzipped, and the engine takes microseconds. Quote the weak-device numbers from `docs/EVIDENCE.md` once they are filled in.
+- **Low-resource devices?** The saved app is about 140 KB gzipped, and the engine takes microseconds. Quote the weak-device numbers from `docs/EVIDENCE.md` once they are filled in.
 - **What did you build during the event?** Be open: the foundation was prepared before the event (see the README). Show the git history from the event start.
+- **Does NOVA fix more mistakes than a normal tutor?** We do not claim that. In our simulation it did not finish more learners than a memoryless tutor, and we know why: each mistake is tested by one question. Its flags are more reliable (83% against 40%), and we tested a coverage fix that raised an ideal learner from 78.6% to 91.0%. It is the next patch. No real students have used it yet.
 - **Why not just use a big chatbot?** A chatbot decides facts by guessing. Here code decides facts and AI only phrases them, so the learner is never taught something wrong by the model.

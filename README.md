@@ -10,6 +10,8 @@ An offline-first, on-device learning assistant (Code Carnival 3.0, PS-06). It le
 npm install
 npm run dev          # http://localhost:5173
 npm run check        # typecheck + tests + content validation (run before every commit)
+npm run verify:content # runs every code question in real Python (needs Python 3)
+npm run content:review  # writes the review sheets in docs/content-review/ for a person to check and sign
 npm run evidence      # simulated-learner results and engine speed -> docs/evidence-data/ (see docs/EVIDENCE.md)
 npm run check:offline # after a build: is everything saved for offline use? (see docs/OFFLINE_TEST.md)
 npm run build && npm run preview   # production build with the offline service worker

@@ -63,7 +63,7 @@ describe('Teach-back screen', () => {
     const go = await show((route) => <TeachBack concept="loops" go={route} />, ai);
     fireEvent.change(await screen.findByLabelText('Your explanation'), { target: { value: 'A loop repeats code again.' } });
     fireEvent.click(screen.getByRole('button', { name: 'Check my explanation' }));
-    expect(await screen.findByText(/Key ideas: 1 of 1 covered/)).toBeTruthy();
+    expect(await screen.findByText(new RegExp(`Key ideas: 1 of ${pack.concepts.find((c) => c.id === 'loops')!.teachBack.length} covered`))).toBeTruthy();
     expect(screen.getByText('Covered:')).toBeTruthy();
     expect(screen.getByText('a loop repeats code')).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: 'Review the lesson' }));

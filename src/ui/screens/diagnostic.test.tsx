@@ -9,6 +9,7 @@ import { SessionProvider, useSession } from '@/app/session';
 import { planToday } from '@/core/engine';
 import { makeProfile } from '@/seed/personas';
 import { NOW, pack } from '@/testkit';
+import { diagnosticLength } from '@/core/engine';
 import { Home } from './Home';
 import { Diagnostic } from './Diagnostic';
 
@@ -48,24 +49,29 @@ describe('Diagnostic screen', () => {
   it('runs the whole check, saves mastery for 3+ concepts, and shows the changed plan', async () => {
     const { storage, p, services } = await setup();
     fireEvent.click(await screen.findByRole('button', { name: 'Start the check' }));
-    expect(await screen.findByText('Question 1 of up to 6')).toBeTruthy();
+    expect(await screen.findByText(`Question 1 of up to ${diagnosticLength(pack).max}`)).toBeTruthy();
 
-    for (let i = 1; i <= 6; i++) {
-      expect(screen.getByRole('progressbar').getAttribute('aria-valuenow')).toBe(String(i - 1));
+    // the check asks 6 to 8 questions (it asks more when a topic gives mixed answers), so follow the screen
+    let answered = 0;
+    while (screen.queryByRole('group', { name: 'Answer choices' }) && answered < diagnosticLength(pack).max) {
+      expect(screen.getByRole('progressbar').getAttribute('aria-valuenow')).toBe(String(answered));
       // no right/wrong marks are shown while the check runs
       expect(screen.queryByText(/Correct\.|Not quite/)).toBeNull();
       answerFirstOption('sure');
+      answered++;
+      await new Promise((r) => setTimeout(r, 0)); // let the screen move on
     }
+    expect(answered).toBeGreaterThanOrEqual(diagnosticLength(pack).min);
 
     expect(await screen.findByText('Your starting point')).toBeTruthy();
-    expect(screen.getByText(/of 6/)).toBeTruthy();
+    expect(screen.getByText(new RegExp(`of ${answered}`))).toBeTruthy();
     expect(screen.getByText('Mistakes NOVA found')).toBeTruthy();
     expect(screen.getByText(/Before: Start with a quick check/)).toBeTruthy();
 
     const saved = await storage.loadLearner(p.id, pack.id);
     const placed = Object.values(saved!.concepts).filter((c) => c.attempts > 0);
     expect(placed.length).toBeGreaterThanOrEqual(3);
-    expect(saved!.history).toHaveLength(6);
+    expect(saved!.history).toHaveLength(answered);
     expect(planToday(saved!, services.pack, NOW).steps[0]!.kind).not.toBe('diagnostic');
   });
 
@@ -73,9 +79,9 @@ describe('Diagnostic screen', () => {
     const routes: unknown[] = [];
     const { storage, p } = await setup('diagnostic', (r) => routes.push(r));
     fireEvent.click(await screen.findByRole('button', { name: 'Start the check' }));
-    await screen.findByText('Question 1 of up to 6');
+    await screen.findByText(`Question 1 of up to ${diagnosticLength(pack).max}`);
     answerFirstOption('guess');
-    await screen.findByText('Question 2 of up to 6');
+    await screen.findByText(`Question 2 of up to ${diagnosticLength(pack).max}`);
     fireEvent.click(screen.getByRole('button', { name: 'Leave' }));
     expect(routes).toEqual([{ name: 'home' }]);
     const saved = await storage.loadLearner(p.id, pack.id);

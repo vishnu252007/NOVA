@@ -34,7 +34,7 @@ function richPack(): ContentPack {
 
 describe('diagnostic: choosing questions', () => {
   it('only checks concepts that have questions, prerequisites first', () => {
-    expect(diagnosticConcepts(pack)).toEqual(['lists', 'loops', 'loop-bounds']);
+    expect(diagnosticConcepts(pack)).toEqual(['variables', 'lists', 'loops', 'loop-bounds', 'functions', 'recursion']);
   });
 
   it('covers every concept once, in order, at the start difficulty', () => {
@@ -81,12 +81,13 @@ describe('diagnostic: choosing questions', () => {
     expect(mixed.asked.length).toBeGreaterThan(CONFIG.diagnostic.minQuestions);
   });
 
-  it('works on the sample pack: 6 questions, 3 concepts, deterministic', () => {
+  it('works on the real pack: 6 to 8 questions, every topic, deterministic', () => {
     const a = play(pack, () => 'wrong');
     const b = play(pack, () => 'wrong');
-    expect(diagnosticLength(pack)).toEqual({ min: 6, max: 6 });
-    expect(a.asked.length).toBe(6);
-    expect(new Set(a.asked.map((q) => q.concept)).size).toBe(3);
+    expect(diagnosticLength(pack)).toEqual({ min: 6, max: 8 });
+    expect(a.asked.length).toBeGreaterThanOrEqual(6);
+    expect(a.asked.length).toBeLessThanOrEqual(8);
+    expect(new Set(a.asked.map((q) => q.concept)).size).toBe(6);
     expect(a.asked.map((q) => q.id)).toEqual(b.asked.map((q) => q.id));
   });
 
@@ -114,16 +115,16 @@ describe('diagnostic: results', () => {
     const { before, after, sum } = finish(() => 'right');
     expect(Object.keys(before.concepts)).toHaveLength(0);
     expect(Object.values(after.concepts).filter((c) => c.attempts > 0).length).toBeGreaterThanOrEqual(3);
-    expect(sum.concepts).toHaveLength(3);
+    expect(sum.concepts).toHaveLength(diagnosticConcepts(pack).length);
     expect(sum.planBefore.steps[0]!.kind).toBe('diagnostic');
     expect(sum.planAfter.steps.some((s) => s.kind === 'diagnostic')).toBe(false);
     expect(sum.planAfter).not.toEqual(sum.planBefore);
   });
 
   it('names the mistakes it found and puts fixing them first in the new plan', () => {
-    const { sum, after } = finish(() => 'wrong');
+    const { sum, after, events } = finish(() => 'wrong');
     expect(sum.correct).toBe(0);
-    expect(sum.sureWrong).toBe(6);
+    expect(sum.sureWrong).toBe(events.length);
     expect(sum.mistakes.length).toBeGreaterThan(0);
     expect(sum.planAfter.steps[0]!.kind).toBe('fix-misconception');
     expect(planToday(after, pack, NOW).steps[0]).toEqual(sum.planAfter.steps[0]);

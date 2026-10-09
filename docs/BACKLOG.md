@@ -15,10 +15,10 @@ Definition of done for every task: `npm run check` passes, tests added, works of
 ## Phase B: Content
 | ID | Task | Acceptance |
 |---|---|---|
-| B1 | Author 6 concepts fully: explanations in 2+ styles, teach-back checklist, keywords | Validator has no warnings for those concepts |
-| B2 | 4 to 6 questions per concept with misconception-tagged distractors | Every wrong option tagged; reviewed by a human |
-| B3 | 4 more generator templates (e.g. accumulator init, loop condition, index vs value in lists, base case) | Each passes the generator test pattern (500 seeds) |
-| B4 | Second small pack (about 10 questions, non-programming) to prove generality | Loads via the same code with zero engine changes |
+| B1 | **DONE (drafted, awaiting human review).** All 6 programming topics have a plain explanation plus at least one more style, a teach-back checklist of 3 to 4 items, and routing keywords. The seasons pack has 3 topics. Validator: 0 errors, 0 warnings | `docs/content-review/*.md` signed off by a person |
+| B2 | **DONE (drafted, awaiting human review).** Programming: 32 questions (4 to 6 per topic, 266 checked by running the code in real Python). Seasons: 12 questions. Every wrong answer is tagged and has feedback. Each mistake is still offered by only one question for most mistakes (48 of 59), which is the next content job | `npm run verify:content` passes; human sign-off pending |
+| B3 | **DONE.** Four generators (`accumulator.init`, `loops.while-condition`, `lists.index-vs-value`, `recursion.base-case`) in `src/generators/basics.ts`, registered, used by the pack, covered by 500-seed tests and the Python check. The old unused `phaseB.ts` (duplicate options in 68 of 200 samples, a fixed question) was removed | `packs.test.ts`, `generators.test.ts`, `npm run verify:content` |
+| B4 | **DONE.** Second pack `seasons-basics` (Science): 3 topics, 12 questions, 19 mistakes, runs on the same engine with no engine change (`packs.test.ts`). Not yet selectable in the app (profiles use `programming-basics`) | `packs.test.ts` |
 
 ## Phase C: AI layer
 | ID | Task | Acceptance |

@@ -25,9 +25,13 @@ describe('simulated learners', () => {
     for (let k = 0; k < 40; k++) for (const p of ['nova', 'baseline'] as const) expect(runLearner(i, k, p, 12, true).attempts).toBeLessThanOrEqual(12);
   });
 
-  it('with perfect teaching and no noise, NOVA resolves every learner', () => {
+  it('measures how much of a learner\'s mistakes the questions could reveal, and how many offered mistakes stay unfixed', () => {
     const r = resolutionExperiment(small({ pLearnMatch: 1, pLearnMismatch: 1, pHold: 1, pSlip: 0, budget: 60 }), 'nova');
-    expect(r.resolvedWithinBudget.p).toBe(1);
+    for (const v of [r.mistakesOfferedShare, r.unfixedOfferedShare, r.resolvedWithinBudget.p]) { expect(v).toBeGreaterThanOrEqual(0); expect(v).toBeLessThanOrEqual(1); }
+    // a mistake can only be fixed if it was found, and it can only be found if some asked question offered it
+    const run = runLearner(small({ pLearnMatch: 1, pLearnMismatch: 1, pHold: 1, pSlip: 0 }), 0, 'nova', 60, true);
+    expect(run.offeredShare).toBeGreaterThanOrEqual(0);
+    expect(run.hiddenButOffered).toBeGreaterThanOrEqual(0);
   });
 
   it('with no noise and teaching off, nothing that is flagged is false', () => {

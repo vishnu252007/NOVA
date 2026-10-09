@@ -9,6 +9,7 @@ import { SessionProvider, useSession } from '@/app/session';
 import { applyAttempt, createLearner } from '@/core/engine';
 import { aaravLearner, freshLearner, makeProfile } from '@/seed/personas';
 import { attempt, NOW, pack } from '@/testkit';
+import type { ContentPack } from '@/core/types';
 import { Home } from './Home';
 import { Learn } from './Learn';
 
@@ -20,12 +21,12 @@ function Harness({ profileId, children }: { profileId: string; children: React.R
   return profile ? <>{children}</> : <div>loading</div>;
 }
 
-async function show(kind: 'fresh' | 'aarav', ui: (go: (r: unknown) => void) => React.ReactNode, onGo: (r: unknown) => void = () => {}) {
+async function show(kind: 'fresh' | 'aarav', ui: (go: (r: unknown) => void) => React.ReactNode, onGo: (r: unknown) => void = () => {}, usePack: ContentPack = pack) {
   const storage = new MemoryStorage();
   const p = makeProfile(kind, NOW, true);
   await storage.saveProfile(p);
   await storage.saveLearner(kind === 'aarav' ? aaravLearner(p.id, pack, NOW) : freshLearner(p.id, pack, NOW));
-  const services = createServices({ storage, ai: new TemplateAI(), clock: { now: () => NOW } });
+  const services = createServices({ storage, ai: new TemplateAI(), clock: { now: () => NOW }, pack: usePack });
   render(<SessionProvider services={services}><Harness profileId={p.id}>{ui(onGo)}</Harness></SessionProvider>);
 }
 
@@ -55,7 +56,10 @@ describe('Learn screen', () => {
   });
 
   it('a concept with one style has no "other styles" row', async () => {
-    await show('fresh', (go) => <Learn concept="lists" go={go} />);
+    const onePack = structuredClone(pack);
+    const lists = onePack.concepts.find((c) => c.id === 'lists')!;
+    lists.explanations = { plain: lists.explanations.plain! }; // a topic that has only one way of explaining it
+    await show('fresh', (go) => <Learn concept="lists" go={go} />, () => {}, onePack);
     await screen.findByText('Plain explanation');
     expect(screen.queryByRole('group', { name: 'Other ways to explain this' })).toBeNull();
   });
